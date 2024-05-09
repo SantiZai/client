@@ -1,3 +1,4 @@
+import Differential from "@/components/pures/Differential";
 import HeroSection from "@/components/sections/HeroSection";
 import SearchClubSection from "@/components/sections/SearchClubSection";
 
@@ -6,6 +7,7 @@ export default function Home() {
     <main className="flex flex-col gap-12">
       <HeroSection />
       <SearchClubSection />
+      <Differential />
     </main>
   );
 }
