@@ -8,14 +8,14 @@ import FOG from "vanta/src/vanta.fog";
 
 export default function SearchClubSection() {
   useEffect(() => {
-    /* FOG({
+    FOG({
       el: "#search",
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
       minHeight: 200.0,
       minWidth: 200.0,
-    }); */
+    });
   }, []);
 
   return (
