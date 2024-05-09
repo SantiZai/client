@@ -4,7 +4,7 @@ import SearchClubSection from "@/components/sections/SearchClubSection";
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-12">
+    <main>
       <HeroSection />
       <SearchClubSection />
       <Differential />
