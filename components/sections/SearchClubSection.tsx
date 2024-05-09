@@ -9,7 +9,7 @@ import FOG from "vanta/src/vanta.fog";
 export default function SearchClubSection() {
   useEffect(() => {
     /* FOG({
-      el: "#vanta",
+      el: "#search",
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
@@ -20,7 +20,7 @@ export default function SearchClubSection() {
 
   return (
     <section
-      id="vanta"
+      id="search"
       className="h-screen w-full flex items-center"
     >
       <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
