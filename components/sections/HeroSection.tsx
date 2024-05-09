@@ -11,7 +11,9 @@ export default function HeroSection() {
           Navegá entre todos los clubes disponibles y reservá tu cancha en
           tiempo real.
         </h3>
-        <Button className="w-1/3">Buscar cancha</Button>
+        <a href="#search">
+          <Button className="w-1/3">Buscar cancha</Button>
+        </a>
       </div>
     </section>
   );
