@@ -1,7 +1,9 @@
+import HeroSection from "@/components/sections/HeroSection";
+
 export default function Home() {
   return (
     <main>
-      <a href="api/auth/login">Login</a>
+      <HeroSection />
     </main>
   );
 }
