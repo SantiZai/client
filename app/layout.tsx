@@ -4,6 +4,7 @@ import "./globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 import { cn } from "@/lib/utils";
+import Navigation from "@/components/pures/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             inter.className
           )}
         >
+          <Navigation />
           {children}
         </body>
       </UserProvider>
