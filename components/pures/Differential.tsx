@@ -29,7 +29,7 @@ export default function Differential() {
   }, []);
 
   return (
-    <section className="w-full bg-gray-200 py-8 text-center">
+    <section className="h-32 w-full bg-gray-200 flex justify-center items-center text-center">
       <h3 className="text-2xl">
         {text}
         {boldText && <strong>{boldText}</strong>}
