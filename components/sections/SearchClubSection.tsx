@@ -60,7 +60,7 @@ export default function SearchClubSection() {
               />
             </fieldset>
           </fieldset>
-          <Button className="w-1/3 mt-4">Buscar</Button>
+          <Button className="w-1/4 mt-4">Buscar</Button>
         </form>
       </div>
     </section>
