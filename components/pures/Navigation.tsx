@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Navigation() {
   const [isVisible, setIsVisible] = useState(true);
   const [prevScroll, setPrevScroll] = useState(0);
+
+  const { user, error, isLoading } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,17 +32,28 @@ export default function Navigation() {
     >
       <nav className="h-full w-11/12 mx-auto flex justify-between items-center">
         <div className="w-1/2">Logo</div>
-        <div className="w-1/2 flex justify-end gap-2">
+        <div className="w-1/2 flex justify-end items-center gap-2">
           {/* TODO: ocultar los botones en modo mobile */}
           <Button
-            className="sm:w-1/4"
+            className="sm:w-1/2 lg:w-1/3 xl:w-1/4"
             variant={"secondary"}
           >
             Lo quiero en mi club
           </Button>
-          <Button className="sm:w-1/4">
-            <a href="api/auth/login">Iniciar sesión</a>
-          </Button>
+          {isLoading ? (
+            <span>Cargando...</span>
+          ) : error ? (
+            <span>{error.message}</span>
+          ) : user ? (
+            <div className="flex gap-1 items-center" onClick={() => console.log() /*TODO: abrir menu desplegable*/}>
+              <Button size={"icon"}>{"p"}</Button>
+              <span>{user.name}</span>
+            </div>
+          ) : (
+            <Button className="sm:w-1/2 lg:w-1/3 xl:w-1/4">
+              <a href="api/auth/login">Iniciar sesión</a>
+            </Button>
+          )}
         </div>
       </nav>
     </header>
