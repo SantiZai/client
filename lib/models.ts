@@ -29,6 +29,7 @@ interface Club {
   admin: User;
   adminId: string;
   sports: SPORTS[];
+  //TODO: add reputation to the club
 }
 
 interface Court {
