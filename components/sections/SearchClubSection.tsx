@@ -60,7 +60,9 @@ export default function SearchClubSection() {
               />
             </fieldset>
           </fieldset>
-          <Button className="w-1/4 mt-4">Buscar</Button>
+          <Button className="w-1/4 mt-4">
+            <a href="/clubs/salto,buenosaires,argentina">Buscar</a>
+          </Button>
         </form>
       </div>
     </section>
