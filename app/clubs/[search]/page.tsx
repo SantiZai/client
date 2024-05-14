@@ -1,6 +1,7 @@
 "use client";
 
 import FilterClubs from "@/components/sections/FilterCLubs";
+import FilteredClubs from "@/components/sections/FilteredClubs";
 import { getClubsByLocation } from "@/lib/data";
 import { Club } from "@/lib/models";
 import { useEffect, useState } from "react";
@@ -18,5 +19,6 @@ export default function FindedClubs({
 
   return (<main>
     <FilterClubs />
+    <FilteredClubs searchedClubs={clubs} />
   </main>)
 }
