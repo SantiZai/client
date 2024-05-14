@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Image from "next/image";
 
 export default function Navigation() {
   const [isVisible, setIsVisible] = useState(true);
@@ -26,7 +27,7 @@ export default function Navigation() {
 
   return (
     <header
-      className={`h-20 w-full fixed z-[999] top-0 left-0 right-0 transition-all duration-300 ${
+      className={`h-20 w-full fixed z-[999] bg-slate-300/50 top-0 left-0 right-0 transition-all duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -45,13 +46,22 @@ export default function Navigation() {
           ) : error ? (
             <span>{error.message}</span>
           ) : user ? (
-            <div className="flex gap-1 items-center" onClick={() => console.log() /*TODO: abrir menu desplegable*/}>
-              <Button size={"icon"}>{"p"}</Button>
+            <div
+              className="flex gap-1 items-center cursor-pointer"
+              onClick={() => console.log() /*TODO: abrir menu desplegable*/}
+            >
+              <Image
+                src={user.picture as string}
+                alt="User picture"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
               <span>{user.name}</span>
             </div>
           ) : (
             <Button className="sm:w-1/2 lg:w-1/3 xl:w-1/4">
-              <a href="api/auth/login">Iniciar sesión</a>
+              <a href="/api/auth/login">Iniciar sesión</a>
             </Button>
           )}
         </div>
