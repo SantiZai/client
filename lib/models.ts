@@ -22,7 +22,9 @@ interface Club {
   id: string;
   createdAt: Date;
   name: string;
+  image: string;
   location: string;
+  address: string;
   courts: Court[];
   admin: User;
   adminId: string;
@@ -60,3 +62,5 @@ interface User {
   userType: USER_TYPES;
   club?: Club;
 }
+
+export type { Club, Court, Reservation, User };
