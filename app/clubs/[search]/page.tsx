@@ -17,7 +17,7 @@ export default function FindedClubs({
     getClubsByLocation(params.search).then((res) => setClubs(res));
   }, [params.search]);
 
-  return (<main>
+  return (<main className="h-screen mt-24">
     <FilterClubs />
     <FilteredClubs searchedClubs={clubs} />
   </main>)

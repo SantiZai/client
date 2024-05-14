@@ -19,7 +19,7 @@ export default function FilteredClubs({
     setClubs(searchedClubs);
   }, [filters]);
   return (
-    <section>
+    <section className="w-11/12 mx-auto">
       <h3>Filtered clubs</h3>
       <ul className="flex gap-2">
         {searchedClubs.map((club: Club) => (
