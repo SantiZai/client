@@ -20,10 +20,10 @@ export default function FilteredClubs({
   }, [filters]);
   return (
     <section className="w-11/12 mx-auto">
-      <h3>Filtered clubs</h3>
-      <ul className="flex gap-2">
+      <h3 className="mb-4">Filtered clubs</h3>
+      <ul className="flex gap-6">
         {searchedClubs.map((club: Club) => (
-          <li className="w-full sm:w-1/2 md:w-1/4">
+          <li className="w-full sm:w-1/2 md:w-1/4 hover:cursor-pointer hover:scale-105 transition-all duration-300">
             <div>
               <Image
                 src={club.image}
@@ -42,7 +42,7 @@ export default function FilteredClubs({
                     .join(" ")}
                 </h5>
                 <div className="flex gap-2 items-center">
-                  <FontAwesomeIcon icon={faLocationDot} width={30} />
+                  <FontAwesomeIcon icon={faLocationDot} width={30} className="w-full" />
                   <div className="flex flex-col">
                     <span className="text-xs">{club.address}</span>
                     <span className="text-xs">{club.location}</span>
