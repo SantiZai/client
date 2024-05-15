@@ -23,7 +23,7 @@ export default function RootLayout({
       <UserProvider>
         <body
           className={cn(
-            "min-h-screen w-full bg-background font-sans antialiased",
+            "w-full bg-background font-sans antialiased",
             inter.className
           )}
         >
