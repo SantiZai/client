@@ -4,7 +4,7 @@ enum USER_TYPES {
   user,
 }
 
-enum SPORTS {
+export enum SPORTS {
   tennis,
   soccer,
   basketball,
@@ -41,6 +41,10 @@ interface Court {
   clubId: string;
   reservations: Reservation[];
   sport: SPORTS;
+  /**
+   * TODO: add price for the club
+   * add illumination
+   */
 }
 
 interface Reservation {
