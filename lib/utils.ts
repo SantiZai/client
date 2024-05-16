@@ -7,6 +7,6 @@ export const cn = (...inputs: ClassValue[]) => {
 
 export const mapClubTitle = (title: string) =>
   title
-    .split("-")
+    .split("+")
     .map((each) => each[0].toUpperCase() + each.slice(1))
     .join(" ");
