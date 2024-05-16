@@ -1,16 +1,12 @@
 "use client";
 
-import FilterClubs from "@/components/sections/FilterCLubs";
+import FilterClubs from "@/components/sections/FilterClubs";
 import FilteredClubs from "@/components/sections/FilteredClubs";
 import { getClubsByLocation, getClubsByLocationAndSport } from "@/lib/data";
 import { Club, SPORTS } from "@/lib/models";
 import { useEffect, useState } from "react";
 
-export default function FindedClubs({
-  params,
-}: {
-  params: { search: string };
-}) {
+const FindedClubs = ({ params }: { params: { search: string } }) => {
   const [clubs, setClubs] = useState<Club[]>([]);
   const [location, setLocation] = useState<string>(params.search);
   const [sport, setSport] = useState<SPORTS>(SPORTS.tennis);
@@ -46,4 +42,6 @@ export default function FindedClubs({
       />
     </main>
   );
-}
+};
+
+export default FindedClubs;

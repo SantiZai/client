@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 
-export default function Navigation() {
+const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [prevScroll, setPrevScroll] = useState(0);
 
@@ -68,4 +68,6 @@ export default function Navigation() {
       </nav>
     </header>
   );
-}
+};
+
+export default Navigation;

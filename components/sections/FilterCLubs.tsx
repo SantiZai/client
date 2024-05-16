@@ -17,7 +17,7 @@ import { Calendar as CalendarIcon, Search } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 
-export default function FilterCLubs({
+const FilterClubs = ({
   setLocation,
   setSport,
   date,
@@ -27,7 +27,7 @@ export default function FilterCLubs({
   setSport: Dispatch<SetStateAction<SPORTS>>;
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
-}) {
+}) => {
   const sportMap: { [key: string]: SPORTS } = {
     tennis: SPORTS.tennis,
     soccer: SPORTS.soccer,
@@ -91,4 +91,6 @@ export default function FilterCLubs({
       </div>
     </section>
   );
-}
+};
+
+export default FilterClubs;

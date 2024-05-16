@@ -3,7 +3,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import HireTheServiceSection from "@/components/sections/HireTheServiceSection";
 import SearchClubSection from "@/components/sections/SearchClubSection";
 
-export default function Home() {
+const Home = () => {
   return (
     <main>
       <HeroSection />
@@ -12,4 +12,6 @@ export default function Home() {
       <HireTheServiceSection />
     </main>
   );
-}
+};
+
+export default Home;

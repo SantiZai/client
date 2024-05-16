@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 
 import FOG from "vanta/src/vanta.fog";
 
-export default function SearchClubSection() {
+const SearchClubSection = () => {
   useEffect(() => {
     FOG({
       el: "#search",
@@ -67,4 +67,6 @@ export default function SearchClubSection() {
       </div>
     </section>
   );
-}
+};
+
+export default SearchClubSection;

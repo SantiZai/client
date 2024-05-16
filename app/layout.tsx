@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   description: "¡Reservá tu cancha y organizá tu próximo partido!",
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="es">
       <UserProvider>
@@ -33,4 +33,6 @@ export default function RootLayout({
       </UserProvider>
     </html>
   );
-}
+};
+
+export default RootLayout;

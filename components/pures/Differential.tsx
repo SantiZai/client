@@ -12,7 +12,7 @@ const differentials = [
   },
 ];
 
-export default function Differential() {
+const Differential = () => {
   const [diff, setDiff] = useState(0);
 
   const handleDiffChange = () => {
@@ -36,4 +36,6 @@ export default function Differential() {
       </h3>
     </section>
   );
-}
+};
+
+export default Differential;
