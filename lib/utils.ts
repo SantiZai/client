@@ -10,3 +10,10 @@ export const mapClubTitle = (title: string) =>
     .split("+")
     .map((each) => each[0].toUpperCase() + each.slice(1))
     .join(" ");
+
+export const mapClubLocation = (location: string) =>
+  location
+    .split(",")
+    .map((each) => each.split("+").join(" "))
+    .map((each) => each[0].toUpperCase() + each.slice(1))
+    .join(", ");

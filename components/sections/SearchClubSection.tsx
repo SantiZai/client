@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
 import FOG from "vanta/src/vanta.fog";
+import Link from "next/link";
 
 const SearchClubSection = () => {
   useEffect(() => {
@@ -61,7 +62,7 @@ const SearchClubSection = () => {
             </fieldset>
           </fieldset>
           <Button className="w-1/4 mt-4">
-            <a href="/clubs/salto,buenosaires,argentina">Buscar</a>
+            <Link href="/clubs/salto,buenos+aires,argentina">Buscar</Link>
           </Button>
         </form>
       </div>
