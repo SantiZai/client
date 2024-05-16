@@ -16,13 +16,20 @@ export default function FindedClubs({
   const [sport, setSport] = useState<SPORTS>(SPORTS.tennis);
   const [date, setDate] = useState<Date>();
   const [hour, setHour] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getClubsByLocation(params.search).then((res) => setClubs(res));
+    setIsLoading(true);
+    getClubsByLocation(params.search)
+      .then((res) => setClubs(res))
+      .finally(() => setIsLoading(false));
   }, [params.search]);
 
   useEffect(() => {
-    getClubsByLocationAndSport(location, sport).then((res) => setClubs(res));
+    setIsLoading(true);
+    getClubsByLocationAndSport(location, sport)
+      .then((res) => setClubs(res))
+      .finally(() => setIsLoading(false));
   }, [location, sport, date, hour]);
 
   return (
@@ -33,7 +40,10 @@ export default function FindedClubs({
         date={date}
         setDate={setDate}
       />
-      <FilteredClubs searchedClubs={clubs} />
+      <FilteredClubs
+        searchedClubs={clubs}
+        isLoading={isLoading}
+      />
     </main>
   );
 }
