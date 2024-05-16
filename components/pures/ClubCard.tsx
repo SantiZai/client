@@ -2,6 +2,7 @@ import { Club } from "@/lib/models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { mapClubTitle } from "@/lib/utils";
 
 const ClubCard = ({ club }: { club: Club }) => {
   return (
@@ -20,10 +21,7 @@ const ClubCard = ({ club }: { club: Club }) => {
         <div className="flex flex-col gap-2">
           <h5 className="text-lg hover:cursor-pointer hover:font-[500] transition-all duration-500">
             <a href={`${club.location}/${club.id}`}>
-              {club.name
-                .split("-")
-                .map((each) => each[0].toUpperCase() + each.slice(1))
-                .join(" ")}
+              {mapClubTitle(club.name)}
             </a>
           </h5>
           <div className="flex gap-2 items-center">
