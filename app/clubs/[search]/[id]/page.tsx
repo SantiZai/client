@@ -23,6 +23,7 @@ import InfiniteHorizontalScroll from "@/components/pures/InfiniteHorizontalScrol
 const ClubPage = ({ params }: { params: { id: string } }) => {
   const [club, setClub] = useState<Club>();
   const [courts, setCourts] = useState<Court[]>();
+  const [selectedHour, setSelectedHour] = useState<string>();
 
   useEffect(() => {
     getClubById(params.id).then((res) => setClub(res));
@@ -85,6 +86,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               </div>
               <Separator className="w-11/12 mx-auto my-4" />
               <InfiniteHorizontalScroll
+                setSelectedHour={setSelectedHour}
                 hours={[
                   "09:00",
                   "10:00",
@@ -99,6 +101,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                 {courts ? (
                   <ul>
                     {courts.map((court: Court) => (
+                    /* TODO: display the available courts in the selected hour */
                       <li>{court.name}</li>
                     ))}
                   </ul>
