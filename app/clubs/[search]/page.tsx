@@ -12,7 +12,7 @@ const FindedClubs = ({ params }: { params: { search: string } }) => {
   const [sport, setSport] = useState<SPORTS>(SPORTS.tennis);
   const [date, setDate] = useState<Date>();
   const [hour, setHour] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setIsLoading(true);
