@@ -5,23 +5,26 @@ import Image from "next/image";
 
 const ClubCard = ({ club }: { club: Club }) => {
   return (
-    <li className="w-full sm:w-1/2 lg:w-1/4 p-2 rounded-lg hover:shadow-lg transition-all duration-500">
+    <li className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33%-1rem)] xl:w-[calc(25%-1rem)] p-2 rounded-lg hover:shadow-lg transition-all duration-500">
       <div>
         <Image
           src={club.image}
           alt={`${club.name} profile picture`}
           height={100}
           width={500}
-          className="rounded-lg w-full"
+          priority
+          className="rounded-lg w-full aspect-auto"
         />
       </div>
       <div className="mt-2 flex justify-between p-2">
         <div className="flex flex-col gap-2">
-          <h5 className="text-lg hover:cursor-pointer hover:text-[1.15rem] transition-all">
-            {club.name
-              .split("-")
-              .map((each) => each[0].toUpperCase() + each.slice(1))
-              .join(" ")}
+          <h5 className="text-lg hover:cursor-pointer hover:font-[500] transition-all duration-500">
+            <a href={`${club.location}/${club.id}`}>
+              {club.name
+                .split("-")
+                .map((each) => each[0].toUpperCase() + each.slice(1))
+                .join(" ")}
+            </a>
           </h5>
           <div className="flex gap-2 items-center">
             <FontAwesomeIcon

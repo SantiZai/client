@@ -11,7 +11,7 @@ const FilteredClubs = ({
 }) => {
   return (
     <section className="w-11/12 mx-auto mt-8">
-      <ul className="flex flex-wrap gap-6">
+      <ul className="flex flex-wrap gap-4">
         {isLoading ? (
           <>
             <ClubSkeleton />
