@@ -12,4 +12,9 @@ const getClubsByLocationAndSport = async (location: string, sport: SPORTS) => {
   return data.json();
 };
 
-export { getClubsByLocation, getClubsByLocationAndSport };
+const getClubById = async (id: string) => {
+  const data = await fetch(`${API_BASE}/clubs/search/${id}`);
+  return data.json();
+};
+
+export { getClubsByLocation, getClubsByLocationAndSport, getClubById };
