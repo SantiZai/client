@@ -19,7 +19,7 @@ const ClubCard = ({ club }: { club: Club }) => {
       </div>
       <div className="mt-2 flex justify-between p-2">
         <div className="flex flex-col gap-2">
-          <h5 className="text-lg hover:cursor-pointer hover:font-[500] transition-all duration-500">
+          <h5 className="text-lg hover:cursor-pointer">
             <a href={`${club.location}/${club.id}`}>
               {mapClubTitle(club.name)}
             </a>
