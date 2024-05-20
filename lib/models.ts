@@ -59,12 +59,12 @@ interface Reservation {
 }
 
 interface User {
-  id: string;
-  createdAt: Date;
+  id?: string;
+  createdAt?: Date;
   fullname: string;
   email: string;
-  reservations: Reservation[];
-  userType: USER_TYPES;
+  reservations?: Reservation[];
+  userType?: USER_TYPES;
   club?: Club;
 }
 
