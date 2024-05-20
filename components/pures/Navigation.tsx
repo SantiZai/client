@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { createUser, getUserByEmail } from "@/lib/data";
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -19,7 +20,16 @@ const Navigation = () => {
 
   const { user, error, isLoading } = useUser();
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    if (user)
+      getUserByEmail(user.email as string).then((res) => {
+        if (res.statusCode == 404)
+          createUser({
+            email: user.email as string,
+            fullname: user.name as string,
+          });
+      });
+  }, [user]);
 
   useEffect(() => {
     const handleScroll = () => {
