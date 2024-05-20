@@ -1,3 +1,4 @@
+import { GET_CONFIG, POST_CONFIG } from "./generateConfigs";
 import { SPORTS, User } from "./models";
 
 const generateFetch = async (url: string, config: {}) => {
@@ -6,25 +7,6 @@ const generateFetch = async (url: string, config: {}) => {
     config
   );
   return data.json();
-};
-
-const GET_CONFIG = () => {
-  return {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-};
-
-const POST_CONFIG = (fullname: string, email: string) => {
-  return {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ fullname, email }),
-  };
 };
 
 /**
