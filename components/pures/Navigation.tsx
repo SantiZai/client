@@ -47,7 +47,7 @@ const Navigation = () => {
 
   return (
     <header
-      className={`h-20 w-full fixed z-[999] bg-slate-300/50 top-0 left-0 right-0 transition-all duration-300 ${
+      className={`h-20 w-full fixed z-[999] top-0 left-0 right-0 transition-all duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
