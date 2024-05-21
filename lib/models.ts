@@ -52,6 +52,7 @@ interface Reservation {
   createdAt: Date;
   date: string;
   hour: string;
+  isLarge: string;
   court: Court;
   courtId: string;
   user: User;
