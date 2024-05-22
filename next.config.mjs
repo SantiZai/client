@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  ignoreBuildErrors: ["bis_skin_checked"],
   images: {
     remotePatterns: [
       {
@@ -10,8 +11,8 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "i.imgur.com",
-        pathname: "/**"
-      }
+        pathname: "/**",
+      },
     ],
   },
 };
