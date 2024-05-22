@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  ignoreBuildErrors: ["bis_skin_checked"],
   images: {
     remotePatterns: [
       {
