@@ -14,7 +14,7 @@ const generateAllHours = () => {
   return hours;
 };
 
-const removeReservatedHours = (reservations: Reservation[]) => {
+const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
   let availableHours = generateAllHours();
   reservations.forEach((reservation: Reservation) => {
     const index = availableHours.indexOf(reservation.hour);
@@ -34,4 +34,4 @@ const removeReservatedHours = (reservations: Reservation[]) => {
   return availableHours;
 };
 
-export { removeReservatedHours };
+export { generateAvailableHoursForCourt };
