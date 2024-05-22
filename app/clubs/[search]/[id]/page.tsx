@@ -95,7 +95,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                   <ul>
                     {courts.map((court: Court) => (
                       /* TODO: display the available courts in the selected hour */
-                      <li>{court.name}</li>
+                      <li key={court.id}>{court.name}</li>
                     ))}
                   </ul>
                 ) : (
