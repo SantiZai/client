@@ -19,20 +19,29 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import InfiniteHorizontalScroll from "@/components/pures/InfiniteHorizontalScroll";
-import { generateAvailableHoursPerClub } from "@/lib/manageReservationHours";
+import {
+  generateAvailableHoursPerClub,
+  largeTurnIsPossible,
+  verifyDisponibility,
+} from "@/lib/manageReservationHours";
 
 const ClubPage = ({ params }: { params: { id: string } }) => {
   const [club, setClub] = useState<Club>();
-  const [courts, setCourts] = useState<Court[]>();
   const [selectedHour, setSelectedHour] = useState<string>();
+  const [availableCourts, setAvailableCourts] = useState<Court[]>();
 
   useEffect(() => {
     getClubById(params.id).then((res) => setClub(res));
   }, [params.id]);
 
   useEffect(() => {
-    if (club) getCourtsByClubId(club.id).then((res) => setCourts(res));
+    if (club) getCourtsByClubId(club.id).then((res) => setAvailableCourts(res));
   }, [club]);
+
+  useEffect(() => {
+    if (club && selectedHour)
+      setAvailableCourts(verifyDisponibility(club, selectedHour));
+  }, [selectedHour]);
 
   return (
     <main className="mt-20 sm:mt-24">
@@ -91,11 +100,28 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                 hours={generateAvailableHoursPerClub(club)}
               />
               <div className="w-11/12 mx-auto">
-                {courts ? (
+                {availableCourts ? (
                   <ul>
-                    {courts.map((court: Court) => (
+                    {availableCourts.map((court: Court) => (
                       /* TODO: display the available courts in the selected hour */
-                      <li key={court.id}>{court.name}</li>
+                      <>
+                        <li
+                          key={court.id}
+                          className="my-2 py-2"
+                        >
+                          <span>{court.name}</span>
+                          {/* TODO: mostrar para sacar turnos largos dependiendo de los turnos siguientes */}
+                          {selectedHour &&
+                            largeTurnIsPossible(court, selectedHour) && (
+                              <div>
+                                <span>Otras duraciones</span>
+                                <span>90 minutos</span>
+                              </div>
+                            )}
+                        </li>
+                        {availableCourts.indexOf(court) !==
+                          availableCourts.length - 1 && <Separator />}
+                      </>
                     ))}
                   </ul>
                 ) : (
