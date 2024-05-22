@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import InfiniteHorizontalScroll from "@/components/pures/InfiniteHorizontalScroll";
+import { generateAvailableHoursPerClub } from "@/lib/manageReservationHours";
 
 const ClubPage = ({ params }: { params: { id: string } }) => {
   const [club, setClub] = useState<Club>();
@@ -87,21 +88,13 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               <Separator className="w-11/12 mx-auto my-4" />
               <InfiniteHorizontalScroll
                 setSelectedHour={setSelectedHour}
-                hours={[
-                  "09:00",
-                  "10:00",
-                  "11:00",
-                  "12:00",
-                  "13:00",
-                  "14:00",
-                  "15:00",
-                ]}
+                hours={generateAvailableHoursPerClub(club)}
               />
               <div className="w-11/12 mx-auto">
                 {courts ? (
                   <ul>
                     {courts.map((court: Court) => (
-                    /* TODO: display the available courts in the selected hour */
+                      /* TODO: display the available courts in the selected hour */
                       <li>{court.name}</li>
                     ))}
                   </ul>
