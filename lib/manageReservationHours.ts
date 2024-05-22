@@ -46,4 +46,33 @@ const generateAvailableHoursPerClub = (club: Club) => {
   return Array.from(new Set(availableHours));
 };
 
-export { generateAvailableHoursForCourt, generateAvailableHoursPerClub };
+const verifyDisponibility = (club: Club, hour: string) => {
+  if (!club || !hour) return [];
+  let availableCourts: Court[] = [];
+  club.courts.forEach((court) => {
+    const availableHours = generateAvailableHoursForCourt(court.reservations);
+    if (availableHours.includes(hour)) {
+      availableCourts.push(court);
+    }
+  });
+  return availableCourts;
+};
+
+const largeTurnIsPossible = (court: Court, hour: string) => {
+  const allHours = generateAllHours();
+  const hourIndex = allHours.indexOf(hour);
+  let isLargePossible = false;
+  if (court.reservations.length <= 0) return true
+  court.reservations.forEach((reservation: Reservation) => {
+    const reservationIndex = allHours.indexOf(reservation.hour);
+    isLargePossible = reservationIndex - hourIndex != 2;
+  });
+  return isLargePossible;
+};
+
+export {
+  generateAvailableHoursForCourt,
+  generateAvailableHoursPerClub,
+  verifyDisponibility,
+  largeTurnIsPossible,
+};
