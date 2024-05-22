@@ -1,4 +1,4 @@
-import { Reservation } from "./models";
+import { Club, Court, Reservation } from "./models";
 
 const generateAllHours = () => {
   let hours = [];
@@ -16,6 +16,7 @@ const generateAllHours = () => {
 
 const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
   let availableHours = generateAllHours();
+  if (reservations.length <= 0) return availableHours;
   reservations.forEach((reservation: Reservation) => {
     const index = availableHours.indexOf(reservation.hour);
     if (index != -1) return;
@@ -34,4 +35,15 @@ const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
   return availableHours;
 };
 
-export { generateAvailableHoursForCourt };
+const generateAvailableHoursPerClub = (club: Club) => {
+  if (!club.courts) return [];
+  let availableHours = generateAllHours();
+  club.courts.forEach((court: Court) => {
+    availableHours = availableHours.filter((hour) =>
+      generateAvailableHoursForCourt(court.reservations).includes(hour)
+    );
+  });
+  return Array.from(new Set(availableHours));
+};
+
+export { generateAvailableHoursForCourt, generateAvailableHoursPerClub };
