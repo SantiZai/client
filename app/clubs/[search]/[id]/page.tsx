@@ -122,7 +122,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                             <span>60 minutos</span>
                             <span>
                               <Link
-                                href={`/create-reservation/${club.id}?day=TODO&hour=${selectedHour}&duration=short`}
+                                href={`/create-reservation/${club.id}?courtId=${court.id}&day=TODO&hour=${selectedHour}&duration=short`}
                               >
                                 <FontAwesomeIcon icon={faArrowRight} />
                               </Link>
@@ -144,7 +144,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                                     <span>
                                       {/* TODO: send the day of the reservation */}
                                       <Link
-                                        href={`/create-reservation/${club.id}?day=TODO&hour=${selectedHour}&duration=large`}
+                                        href={`/create-reservation/${club.id}?courtId=${court.id}&day=TODO&hour=${selectedHour}&duration=large`}
                                       >
                                         <FontAwesomeIcon icon={faArrowRight} />
                                       </Link>
