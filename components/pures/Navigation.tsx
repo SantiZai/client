@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
-import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { createUser, getUserByEmail } from "@/lib/data";
+import { useUserStore } from "@/stores/user/user-store-provider";
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -20,17 +21,45 @@ const Navigation = () => {
 
   const { user, error, isLoading } = useUser();
 
+  const setUserStore = useUserStore((state) => state.setUser);
+
+  /**
+   * Verify if the user exists
+   * If exists set the user store with the user finded
+   * If the user don't exists, create the user and set the user store
+   */
   useEffect(() => {
     if (user)
       getUserByEmail(user.email as string).then((res) => {
-        if (res.statusCode == 404)
+        if (res.statusCode == 404) {
           createUser({
             email: user.email as string,
             fullname: user.name as string,
+          }).then((newUser) => {
+            console.log(newUser);
+            setUserStore({
+              id: newUser.id,
+              fullname: newUser.fullname,
+              email: newUser.email,
+              phonenumber: newUser.phonenumber,
+              reservations: newUser.reservations,
+            });
           });
+        } else {
+          setUserStore({
+            id: res.id,
+            fullname: res.fullname,
+            email: res.email,
+            phonenumber: res.phonenumber,
+            reservations: res.reservations,
+          });
+        }
       });
   }, [user]);
 
+  /**
+   * Manage the scroll for hide or show the navigation
+   */
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -38,7 +67,6 @@ const Navigation = () => {
       setIsVisible(shouldShowNavbar);
       setPrevScroll(scrollY);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -68,10 +96,7 @@ const Navigation = () => {
           ) : user ? (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <div
-                  className="flex gap-1 items-center cursor-pointer"
-                  onClick={() => console.log() /*TODO: abrir menu desplegable*/}
-                >
+                <div className="flex gap-1 items-center cursor-pointer">
                   <Image
                     src={user.picture as string}
                     alt="User picture"
