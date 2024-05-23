@@ -2,7 +2,7 @@ import { Club } from "@/lib/models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { mapClubTitle } from "@/lib/utils";
+import { mapClubLocation, mapClubTitle } from "@/lib/utils";
 
 const ClubCard = ({ club }: { club: Club }) => {
   return (
@@ -28,11 +28,10 @@ const ClubCard = ({ club }: { club: Club }) => {
             <FontAwesomeIcon
               icon={faLocationDot}
               width={30}
-              className="w-full"
             />
             <div className="flex flex-col">
               <span className="text-xs">{club.address}</span>
-              <span className="text-xs">{club.location}</span>
+              <span className="text-xs">{mapClubLocation(club.location)}</span>
             </div>
           </div>
         </div>
