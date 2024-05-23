@@ -10,7 +10,7 @@ export type UserState = {
 };
 
 export type UserActions = {
-  setUser: () => void;
+  setUser: (user: UserState) => void;
 };
 
 export type UserStore = UserState & UserActions;
@@ -26,13 +26,13 @@ export const defaultInitState: UserState = {
 export const createUserStore = (initState: UserState = defaultInitState) => {
   return createStore<UserStore>()((set) => ({
     ...initState,
-    setUser: () =>
-      set((state) => ({
-        id: state.id,
-        fullname: state.fullname,
-        email: state.email,
-        phonenumber: state.phonenumber,
-        reservations: state.reservations,
+    setUser: (user: UserState) =>
+      set(() => ({
+        id: user.id,
+        fullname: user.fullname,
+        email: user.email,
+        phonenumber: user.phonenumber,
+        reservations: user.reservations,
       })),
   }));
 };
