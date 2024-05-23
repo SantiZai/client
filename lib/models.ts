@@ -18,6 +18,14 @@ enum SURFACES {
   hard,
 }
 
+enum SERVICES {
+  buffet,
+  showers,
+  parking,
+  grills,
+  security,
+}
+
 interface Club {
   id: string;
   createdAt: Date;
@@ -29,6 +37,7 @@ interface Club {
   admin: User;
   adminId: string;
   sports: SPORTS[];
+  services: SERVICES[];
   //TODO: add reputation to the club
 }
 
@@ -37,14 +46,12 @@ interface Court {
   createdAt: Date;
   name: string;
   surface: SURFACES;
+  lightning: boolean;
   club: Club;
   clubId: string;
   reservations: Reservation[];
   sport: SPORTS;
-  /**
-   * TODO: add price for the club
-   * add illumination
-   */
+  // TODO: add price for the club
 }
 
 interface Reservation {
@@ -64,6 +71,7 @@ interface User {
   createdAt?: Date;
   fullname: string;
   email: string;
+  phonenumber?: string;
   reservations?: Reservation[];
   userType?: USER_TYPES;
   club?: Club;
