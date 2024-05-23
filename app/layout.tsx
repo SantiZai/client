@@ -5,6 +5,7 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/pures/Navigation";
+import { UserStoreProvider } from "@/stores/user/user-store-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,17 +21,19 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="es">
-      <UserProvider>
-        <body
-          className={cn(
-            "w-full bg-background font-sans antialiased",
-            inter.className
-          )}
-        >
-          <Navigation />
-          {children}
-        </body>
-      </UserProvider>
+      <UserStoreProvider>
+        <UserProvider>
+          <body
+            className={cn(
+              "w-full bg-background font-sans antialiased",
+              inter.className
+            )}
+          >
+            <Navigation />
+            {children}
+          </body>
+        </UserProvider>
+      </UserStoreProvider>
     </html>
   );
 };
