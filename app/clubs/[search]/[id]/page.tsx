@@ -74,7 +74,9 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
             </BreadcrumbList>
           </Breadcrumb>
         ) : (
-          <Skeleton className="w-full sm:w-1/2 md:w-1/3 h-6" />
+          <div className="w-11/12 mx-auto">
+            <Skeleton className="w-full sm:w-1/2 md:w-1/3 h-6" />
+          </div>
         )}
       </section>
 
