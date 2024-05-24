@@ -131,9 +131,18 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                     />
                     <div className="ml-4">
                       <div className="flex items-center">
-                        <StarIcon className="text-yellow-400" />
-                        <StarIcon className="text-yellow-400" />
-                        <StarIcon className="text-yellow-400" />
+                        <StarIcon
+                          className="text-yellow-400"
+                          fill="currentColor"
+                        />
+                        <StarIcon
+                          className="text-yellow-400"
+                          fill="currentColor"
+                        />
+                        <StarIcon
+                          className="text-yellow-400"
+                          fill="currentColor"
+                        />
                         <StarIcon className="text-yellow-400" />
                         <StarIcon className="text-yellow-400" />
                       </div>
@@ -206,15 +215,16 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Sobre el pago</CardTitle>
+                    <CardTitle>Información importante</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="mb-4 text-sm md:text-base">
-                      Este complejo no exige la carga de una tarjeta como
-                      garantía para confirmar su reserva. Simplemente complete
-                      sus datos y presione el botón "Confirmar Reserva". Tené en
-                      cuenta que para cancelar el turno debes hacerlo con 24hs
-                      de anticipación, sino se aplicará una penalización.
+                      Antes de reservar se le exige al jugador que las reservas
+                      creadas sólo pueden ser canceladas con dos horas de
+                      anticipación a la hora de dicha reserva, de lo contrario
+                      se penalizará a quién efectúe la reserva de modo que de
+                      ocurrir esto en reiteradas ocaciones su perfil quedará
+                      excento de beneficios o funcionalidades exclusivas.
                     </p>
                     <Button className="w-full">Confirmar reserva</Button>
                   </CardContent>
@@ -446,15 +456,15 @@ function PhoneIcon(props: any) {
   );
 }
 
-function StarIcon(props: any) {
+function StarIcon({ className, fill }: { className?: string; fill?: string }) {
   return (
     <svg
-      {...props}
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={fill ? fill : "none"}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
