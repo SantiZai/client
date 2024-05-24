@@ -51,9 +51,7 @@ const verifyDisponibility = (club: Club, hour: string) => {
   let availableCourts: Court[] = [];
   club.courts.forEach((court) => {
     const availableHours = generateAvailableHoursForCourt(court.reservations);
-    if (availableHours.includes(hour)) {
-      availableCourts.push(court);
-    }
+    if (availableHours.includes(hour)) availableCourts.push(court);
   });
   return availableCourts;
 };
@@ -62,7 +60,7 @@ const largeTurnIsPossible = (court: Court, hour: string) => {
   const allHours = generateAllHours();
   const hourIndex = allHours.indexOf(hour);
   let isLargePossible = false;
-  if (court.reservations.length <= 0) return true
+  if (court.reservations.length <= 0) return true;
   court.reservations.forEach((reservation: Reservation) => {
     const reservationIndex = allHours.indexOf(reservation.hour);
     isLargePossible = reservationIndex - hourIndex != 2;
