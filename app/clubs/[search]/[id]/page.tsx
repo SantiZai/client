@@ -30,11 +30,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 
 const ClubPage = ({ params }: { params: { id: string } }) => {
   const [club, setClub] = useState<Club>();
   const [selectedHour, setSelectedHour] = useState<string>();
   const [availableCourts, setAvailableCourts] = useState<Court[]>();
+  const [date, setDate] = useState<Date>();
+  const [formattedDate, setFormattedDate] = useState<string>();
 
   useEffect(() => {
     getClubById(params.id).then((res) => setClub(res));
@@ -48,6 +59,14 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
     if (club && selectedHour)
       setAvailableCourts(verifyDisponibility(club, selectedHour));
   }, [selectedHour]);
+
+  useEffect(() => {
+    const fecha = new Date(date as Date);
+    const dia = fecha.getDate().toString().padStart(2, "0");
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+    const anio = fecha.getFullYear();
+    setFormattedDate(`${dia}-${mes}-${anio}`);
+  }, [date]);
 
   return (
     <main className="mt-20 sm:mt-24">
@@ -103,6 +122,39 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                 </div>
               </div>
               <Separator className="w-11/12 mx-auto my-4" />
+
+              <div className="w-11/12 mx-auto mb-4">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className="w-full pl-3 text-left font-normal"
+                    >
+                      {date ? (
+                        format(date, "PPP")
+                      ) : (
+                        <span>Seleccione una fecha</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto p-0"
+                    align="start"
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
               <InfiniteHorizontalScroll
                 setSelectedHour={setSelectedHour}
                 hours={generateAvailableHoursPerClub(club)}
@@ -124,7 +176,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                             <span>60 minutos</span>
                             <span>
                               <Link
-                                href={`/create-reservation/${club.id}?courtId=${court.id}&day=TODO&hour=${selectedHour}&duration=short`}
+                                href={`/create-reservation/${club.id}?courtId=${court.id}&day=${formattedDate}&hour=${selectedHour}&duration=short`}
                               >
                                 <FontAwesomeIcon icon={faArrowRight} />
                               </Link>
@@ -146,7 +198,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                                     <span>
                                       {/* TODO: send the day of the reservation */}
                                       <Link
-                                        href={`/create-reservation/${club.id}?courtId=${court.id}&day=TODO&hour=${selectedHour}&duration=large`}
+                                        href={`/create-reservation/${club.id}?courtId=${court.id}&day=${formattedDate}&hour=${selectedHour}&duration=large`}
                                       >
                                         <FontAwesomeIcon icon={faArrowRight} />
                                       </Link>
