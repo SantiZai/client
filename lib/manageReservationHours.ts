@@ -16,10 +16,9 @@ const generateAllHours = () => {
 
 const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
   let availableHours = generateAllHours();
-  if (reservations.length <= 0) return availableHours;
   reservations.forEach((reservation: Reservation) => {
     const index = availableHours.indexOf(reservation.hour);
-    if (index != -1) return;
+    if (index == -1) return;
     if (reservation.isLarge) {
       const unavailableHours = availableHours.slice(index - 1, index + 3);
       availableHours = availableHours.filter(
@@ -36,12 +35,11 @@ const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
 };
 
 const generateAvailableHoursPerClub = (club: Club) => {
-  if (!club.courts) return [];
-  let availableHours = generateAllHours();
-  club.courts.forEach((court: Court) => {
-    availableHours = availableHours.filter((hour) =>
-      generateAvailableHoursForCourt(court.reservations).includes(hour)
-    );
+  let availableHours: string[] = [];
+  club.courts.forEach((court) => {
+    availableHours = availableHours
+      .concat(generateAvailableHoursForCourt(court.reservations))
+      .sort();
   });
   return Array.from(new Set(availableHours));
 };
@@ -51,7 +49,9 @@ const verifyDisponibility = (club: Club, hour: string) => {
   let availableCourts: Court[] = [];
   club.courts.forEach((court) => {
     const availableHours = generateAvailableHoursForCourt(court.reservations);
-    if (availableHours.includes(hour)) availableCourts.push(court);
+    if (availableHours.includes(hour)) {
+      availableCourts.push(court);
+    }
   });
   return availableCourts;
 };
