@@ -1,5 +1,9 @@
 import { GET_CONFIG, POST_CONFIG } from "./generateConfigs";
-import { SPORTS, User } from "./models";
+import { Reservation, SPORTS, User } from "./models";
+
+/**
+ * UTILS
+ */
 
 const generateFetch = async (url: string, config: {}) => {
   const data = await fetch(
@@ -40,7 +44,30 @@ const getUserByEmail = async (email: string) =>
   await generateFetch(`users/${email}`, GET_CONFIG);
 
 const createUser = async (user: User) =>
-  await generateFetch("users", POST_CONFIG(user.fullname, user.email));
+  await generateFetch(
+    "users",
+    POST_CONFIG({ fullname: user.fullname, email: user.email })
+  );
+
+/**
+ * RESERVATIONS
+ */
+
+const createReservation = async (reservation: Partial<Reservation>) =>
+  await generateFetch(
+    "reservations",
+    POST_CONFIG({
+      date: reservation.date,
+      hour: reservation.hour,
+      isLarge: reservation.isLarge,
+      userId: reservation.userId,
+      courtId: reservation.courtId,
+    })
+  );
+
+/**
+ * EXPORTS
+ */
 
 export {
   getClubsByLocation,
@@ -50,4 +77,5 @@ export {
   getCourtById,
   getUserByEmail,
   createUser,
+  createReservation,
 };

@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getClubById, getCourtById } from "@/lib/data";
+import { createReservation, getClubById, getCourtById } from "@/lib/data";
 import { Club, Court } from "@/lib/models";
-import { mapClubLocation, mapClubTitle } from "@/lib/utils";
+import { mapClubLocation, mapClubTitle, mapSport } from "@/lib/utils";
 import { UserState } from "@/stores/user/user-store";
 import { useUserStore } from "@/stores/user/user-store-provider";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -23,9 +23,9 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
-  const [day, setDay] = useState<string>("");
+  const [date, setDate] = useState<string>("");
   const [hour, setHour] = useState<string>("");
-  const [duration, setDuration] = useState<string>("");
+  const [isLarge, setIsLarge] = useState<boolean>();
   const [clubId, setClubId] = useState<string>("");
   const [courtId, setCourtId] = useState<string>("");
   const [userStore, setUserStore] = useState<UserState>();
@@ -43,11 +43,13 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
 
   useEffect(() => {
     setHour(searchParams.get("hour") as string);
-    setDay(searchParams.get("day") as string);
-    setDuration(searchParams.get("duration") as string);
+    setDate(searchParams.get("day") as string);
+    searchParams.get("duration") == "short"
+      ? setIsLarge(false)
+      : setIsLarge(true);
     setCourtId(searchParams.get("courtId") as string);
     setClubId(params.clubId);
-  }, [day, hour, duration, courtId, params.clubId]);
+  }, [date, hour, isLarge, courtId, params.clubId]);
 
   useEffect(() => {
     setUserStore({ id, fullname, email, phonenumber, reservations });
@@ -166,7 +168,7 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                   <div className="mb-4">
                     <MapPinIcon className="mb-1" />
                     <p className="text-sm">
-                      {court.name} - {court.sport}
+                      {court.name} - {mapSport(court.sport)}
                     </p>
                     <p className="text-sm">
                       {court.surface},{" "}
@@ -226,7 +228,20 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                       ocurrir esto en reiteradas ocaciones su perfil quedará
                       excento de beneficios o funcionalidades exclusivas.
                     </p>
-                    <Button className="w-full">Confirmar reserva</Button>
+                    <Button
+                      className="w-full"
+                      onClick={() =>
+                        createReservation({
+                          date,
+                          hour,
+                          isLarge,
+                          userId: id,
+                          courtId,
+                        })
+                      }
+                    >
+                      Confirmar reserva
+                    </Button>
                   </CardContent>
                 </Card>
               </div>

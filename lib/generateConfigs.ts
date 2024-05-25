@@ -7,12 +7,12 @@ export const GET_CONFIG = () => {
   };
 };
 
-export const POST_CONFIG = (fullname: string, email: string) => {
+export const POST_CONFIG = (props: any) => {
   return {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ fullname, email }),
+    body: JSON.stringify({ ...props }),
   };
 };
