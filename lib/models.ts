@@ -51,7 +51,7 @@ interface Court {
   clubId: string;
   reservations: Reservation[];
   sport: SPORTS;
-  // TODO: add price for the club
+  // TODO: add price for the court
 }
 
 interface Reservation {
