@@ -123,7 +123,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               </div>
               <Separator className="w-11/12 mx-auto my-4" />
 
-              <div className="w-11/12 mx-auto mb-4">
+                <div className="w-11/12 mx-auto mb-4">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -140,7 +140,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                   </PopoverTrigger>
                   <PopoverContent
                     className="w-auto p-0"
-                    align="start"
+                    align="center"
                   >
                     <Calendar
                       mode="single"
@@ -159,6 +159,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                 setSelectedHour={setSelectedHour}
                 hours={generateAvailableHoursPerClub(club)}
               />
+              
               <div className="w-11/12 mx-auto">
                 {!selectedHour ? (
                   <span>Seleccione un horario</span>
