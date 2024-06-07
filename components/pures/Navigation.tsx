@@ -121,6 +121,7 @@ const Navigation = () => {
                 <SheetDescription className="w-11/12 mx-auto">
                   {user ? (
                     <>
+                    {/* TODO: add more styles and finish the mobile nav */}
                     <Separator className="w-full mx-auto my-4" />
                     <div className="flex flex-col items-start mt-4">
                       <Link
@@ -173,7 +174,6 @@ const Navigation = () => {
           </Sheet>
         </div>
         <div className="w-1/2 hidden sm:flex justify-end items-center gap-2">
-          {/* TODO: ocultar los botones en modo mobile */}
           <Button
             className="sm:w-1/2 lg:w-1/3 xl:w-1/4"
             variant={"secondary"}
