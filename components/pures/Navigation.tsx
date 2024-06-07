@@ -14,6 +14,16 @@ import {
 } from "../ui/dropdown-menu";
 import { createUser, getUserByEmail } from "@/lib/data";
 import { useUserStore } from "@/stores/user/user-store-provider";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
+import { Separator } from "../ui/separator";
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -81,7 +91,88 @@ const Navigation = () => {
     >
       <nav className="h-full w-11/12 mx-auto flex justify-between items-center">
         <div className="w-1/2">Logo</div>
-        <div className="w-1/2 flex justify-end items-center gap-2">
+        <div className="w-1/2 sm:hidden flex justify-end">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button>{">"}</Button>
+            </SheetTrigger>
+            <SheetContent className="z-[999] flex flex-col justify-between">
+              <SheetHeader className="py-8">
+                <SheetTitle>
+                  {isLoading ? (
+                    <span>Cargando...</span>
+                  ) : error ? (
+                    <span>{error.message}</span>
+                  ) : (
+                    user && (
+                      <div className="flex flex-col justify-center items-center gap-1">
+                        <Image
+                          src={user.picture as string}
+                          alt="User picture"
+                          width={60}
+                          height={60}
+                          className="rounded-full"
+                        />
+                        <span className="text-xl">{user.name}</span>
+                      </div>
+                    )
+                  )}
+                </SheetTitle>
+                <SheetDescription className="w-11/12 mx-auto">
+                  {user ? (
+                    <>
+                    <Separator className="w-full mx-auto my-4" />
+                    <div className="flex flex-col items-start mt-4">
+                      <Link
+                        href={""}
+                        className="text-lg text-black"
+                      >
+                        Inicio
+                      </Link>
+                      <Link
+                        href={""}
+                        className="text-lg text-black"
+                      >
+                        Mi perfil
+                      </Link>
+                      <Link
+                        href={""}
+                        className="text-lg text-black"
+                      >
+                        Mis reservas
+                      </Link>
+                    </div>
+                      <Separator className="w-full mx-auto my-4" />
+                      <Button className="w-full">
+                        <Link
+                          href={"/api/auth/logout"}
+                          className="text-lg"
+                        >
+                          Cerrar sesión
+                        </Link>
+                      </Button>
+                      <Separator className="w-full mx-auto my-4" />
+                      <Link href="/privacy-policy" className="text-slate-500 text-center text-sm">Términos y condiciones</Link>
+                    </>
+                  ) : (
+                    <Button className="w-full">
+                      <Link
+                        href={"/api/auth/login"}
+                        className="text-lg"
+                      >
+                        Iniciar sesión
+                      </Link>
+                    </Button>
+                  )}
+                </SheetDescription>
+              </SheetHeader>
+              <SheetFooter className="w-11/12 mx-auto flex items-center">
+                <span>logo</span>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+        </div>
+        <div className="w-1/2 hidden sm:flex justify-end items-center gap-2">
           {/* TODO: ocultar los botones en modo mobile */}
           <Button
             className="sm:w-1/2 lg:w-1/3 xl:w-1/4"
@@ -94,9 +185,10 @@ const Navigation = () => {
           ) : error ? (
             <span>{error.message}</span>
           ) : user ? (
+            /* profile dropdown */
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <div className="flex gap-1 items-center cursor-pointer">
+                <div className="flex items-center gap-1 cursor-pointer">
                   <Image
                     src={user.picture as string}
                     alt="User picture"
