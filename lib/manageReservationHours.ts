@@ -34,6 +34,23 @@ const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
   return availableHours;
 };
 
+const generateClubAvailability = (club: Club) => {
+  if (!club) return {};
+  let allHours = generateAllHours();
+  let disponibility: any = {};
+  club.courts.forEach((court: Court) => {
+    disponibility[court.name] = [];
+    if (court.reservations.length == 0) {
+      disponibility[court.name] = allHours;
+    } else {
+      disponibility[court.name] = generateAvailableHoursForCourt(
+        court.reservations
+      );
+    }
+  });
+  return disponibility;
+};
+
 const generateAvailableHoursPerClub = (club: Club) => {
   let availableHours: string[] = [];
   club.courts.forEach((court) => {
@@ -71,6 +88,7 @@ const largeTurnIsPossible = (court: Court, hour: string) => {
 export {
   generateAvailableHoursForCourt,
   generateAvailableHoursPerClub,
+  generateClubAvailability,
   verifyDisponibility,
   largeTurnIsPossible,
 };
