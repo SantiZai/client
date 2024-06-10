@@ -156,8 +156,8 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               </div>
 
               <InfiniteHorizontalScroll
-                setSelectedHour={setSelectedHour}
                 hours={generateAvailableHoursPerClub(club)}
+                setSelectedHour={setSelectedHour}
               />
               
               <div className="w-11/12 mx-auto">
