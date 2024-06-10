@@ -1,6 +1,6 @@
 import { Club, Court, Reservation } from "./models";
 
-const generateAllHours = () => {
+export const generateAllHours = () => {
   let hours = [];
   for (let i = 0; i < 24; i++) {
     if (i < 10) {
