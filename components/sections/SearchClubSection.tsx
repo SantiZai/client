@@ -9,14 +9,14 @@ import Link from "next/link";
 
 const SearchClubSection = () => {
   useEffect(() => {
-    FOG({
+    /* FOG({
       el: "#search",
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
       minHeight: 200.0,
       minWidth: 200.0,
-    });
+    }); */
   }, []);
 
   return (
