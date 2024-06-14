@@ -14,11 +14,15 @@ export const generateAllHours = () => {
   return hours;
 };
 
-const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
+const generateAvailableHoursForCourt = (
+  reservations: Reservation[],
+  date: string
+) => {
   let availableHours = generateAllHours();
-  reservations.forEach((reservation: Reservation) => {
+  reservations.forEach((reservation) => {
     const index = availableHours.indexOf(reservation.hour);
     if (index == -1) return;
+    if (reservation.date != date) return availableHours;
     if (reservation.isLarge) {
       const unavailableHours = availableHours.slice(index - 1, index + 3);
       availableHours = availableHours.filter(
@@ -34,7 +38,7 @@ const generateAvailableHoursForCourt = (reservations: Reservation[]) => {
   return availableHours;
 };
 
-const generateClubAvailability = (club: Club) => {
+const generateClubAvailability = (club: Club, date: string) => {
   if (!club) return {};
   let allHours = generateAllHours();
   let disponibility: any = {};
@@ -44,28 +48,32 @@ const generateClubAvailability = (club: Club) => {
       disponibility[court.name] = allHours;
     } else {
       disponibility[court.name] = generateAvailableHoursForCourt(
-        court.reservations
+        court.reservations,
+        date
       );
     }
   });
   return disponibility;
 };
 
-const generateAvailableHoursPerClub = (club: Club) => {
+const generateAvailableHoursPerClub = (club: Club, date: string) => {
   let availableHours: string[] = [];
   club.courts.forEach((court) => {
     availableHours = availableHours
-      .concat(generateAvailableHoursForCourt(court.reservations))
+      .concat(generateAvailableHoursForCourt(court.reservations, date))
       .sort();
   });
   return Array.from(new Set(availableHours));
 };
 
-const verifyDisponibility = (club: Club, hour: string) => {
+const verifyDisponibility = (club: Club, hour: string, date: string) => {
   if (!club || !hour) return [];
   let availableCourts: Court[] = [];
   club.courts.forEach((court) => {
-    const availableHours = generateAvailableHoursForCourt(court.reservations);
+    const availableHours = generateAvailableHoursForCourt(
+      court.reservations,
+      date
+    );
     if (availableHours.includes(hour)) {
       availableCourts.push(court);
     }
