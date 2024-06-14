@@ -45,7 +45,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
   const [selectedHour, setSelectedHour] = useState<string>();
   const [availableCourts, setAvailableCourts] = useState<Court[]>();
   const [date, setDate] = useState<Date>();
-  const [formattedDate, setFormattedDate] = useState<string>();
+  const [formattedDate, setFormattedDate] = useState<string>("");
 
   useEffect(() => {
     getClubById(params.id).then((res) => setClub(res));
@@ -57,19 +57,25 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     if (club && selectedHour)
-      setAvailableCourts(verifyDisponibility(club, selectedHour));
+      setAvailableCourts(
+        verifyDisponibility(club, selectedHour, formattedDate)
+      );
   }, [selectedHour]);
 
   useEffect(() => {
-    const fecha = new Date(date as Date);
-    const dia = fecha.getDate().toString().padStart(2, "0");
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
-    const anio = fecha.getFullYear();
-    setFormattedDate(`${dia}-${mes}-${anio}`);
+    if (date) {
+      const fecha = new Date(date as Date);
+      const dia = fecha.getDate().toString().padStart(2, "0");
+      const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+      const anio = fecha.getFullYear();
+      setFormattedDate(`${dia}-${mes}-${anio}`);
+    }
   }, [date]);
 
   return (
     <main className="mt-20 sm:mt-24">
+
+      // Breadcrumb web
       <section className="hidden sm:block">
         {club ? (
           <Breadcrumb className="w-11/12 mx-auto">
@@ -123,7 +129,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               </div>
               <Separator className="w-11/12 mx-auto my-4" />
 
-                <div className="w-11/12 mx-auto mb-4">
+              <div className="w-11/12 mx-auto mb-4">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -146,6 +152,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                       mode="single"
                       selected={date}
                       onSelect={setDate}
+                      /* TODO: no debe poder reservar con mas de 10 dias de anticipacion */
                       disabled={(date) =>
                         date > new Date() || date < new Date("1900-01-01")
                       }
@@ -156,10 +163,11 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               </div>
 
               <InfiniteHorizontalScroll
-                hours={generateAvailableHoursPerClub(club)}
+                hours={generateAvailableHoursPerClub(club, formattedDate)}
                 setSelectedHour={setSelectedHour}
+                blocked={formattedDate.length < 1}
               />
-              
+
               <div className="w-11/12 mx-auto">
                 {!selectedHour ? (
                   <span>Seleccione un horario</span>
