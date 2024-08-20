@@ -74,8 +74,6 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="mt-20 sm:mt-24">
-
-      // Breadcrumb web
       <section className="hidden sm:block">
         {club ? (
           <Breadcrumb className="w-11/12 mx-auto">
@@ -152,10 +150,10 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                       mode="single"
                       selected={date}
                       onSelect={setDate}
-                      /* TODO: no debe poder reservar con mas de 10 dias de anticipacion */
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
+                      disabled={(date) => {
+                        const today = new Date();
+                        return date < today || date.getDate() > today.getDate() + 7;
+                      }}
                       initialFocus
                     />
                   </PopoverContent>
@@ -174,7 +172,6 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                 ) : availableCourts ? (
                   <ul className="mt-4">
                     {availableCourts.map((court: Court) => (
-                      /* TODO: display the available courts in the selected hour */
                       <>
                         <li
                           key={court.id}
