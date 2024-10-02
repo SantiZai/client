@@ -11,7 +11,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { getClubById, getCourtsByClubId } from "@/lib/data";
 import { Club, Court, SERVICES, SPORTS } from "@/lib/models";
-import { mapClubLocation, mapClubTitle, mapService, mapSport } from "@/lib/utils";
+import {
+  mapClubLocation,
+  mapClubTitle,
+  mapService,
+  mapSport,
+} from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -44,9 +49,9 @@ import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import SwitchServiceIcon from "@/components/pures/SwitchServiceIcon";
 
 import dynamic from "next/dynamic";
-import SwitchServiceIcon from "@/components/pures/SwitchServiceIcon";
 const Map = dynamic(() => import("@/components/pures/Map"), { ssr: false });
 
 const ClubPage = ({ params }: { params: { id: string } }) => {
@@ -396,24 +401,20 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                     <Separator />
                     <span className="mt-1 flex gap-6 flex-wrap">
                       {club.services.map((service: SERVICES, index: number) => (
-                        <span key={index}><SwitchServiceIcon service={service} />{mapService(service)}</span>
+                        <span key={index}>
+                          <SwitchServiceIcon service={service} />
+                          {mapService(service)}
+                        </span>
                       ))}
                     </span>
                   </div>
                 </div>
               </div>
-              <Map position={[-34.2785692, -60.2487025]} popupText={mapClubTitle(club.name)} />
+              <Map
+                position={[Number(club.coords.split(",")[0]), Number(club.coords.split(",")[1])]}
+                popupText={mapClubTitle(club.name)}
+              />
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
           </div>
         </section>
       )}
