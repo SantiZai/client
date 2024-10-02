@@ -39,6 +39,7 @@ const FindedClubs = ({ params }: { params: { search: string } }) => {
       <FilteredClubs
         searchedClubs={clubs}
         isLoading={isLoading}
+        sport={sport}
       />
     </main>
   );
