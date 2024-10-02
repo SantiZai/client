@@ -1,10 +1,10 @@
-import { Club } from "@/lib/models";
+import { Club, SPORTS } from "@/lib/models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { mapClubLocation, mapClubTitle } from "@/lib/utils";
 
-const ClubCard = ({ club }: { club: Club }) => {
+const ClubCard = ({ club, sport }: { club: Club, sport: SPORTS }) => {
   return (
     <li className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33%-1rem)] xl:w-[calc(25%-1rem)] p-2 rounded-lg hover:shadow-lg transition-all duration-500">
       <div>
@@ -20,7 +20,7 @@ const ClubCard = ({ club }: { club: Club }) => {
       <div className="mt-2 flex justify-between p-2">
         <div className="flex flex-col gap-2">
           <h5 className="text-lg hover:cursor-pointer">
-            <a href={`${club.location}/${club.id}`}>
+            <a href={`${club.location}/${club.id}?sport=${sport}`}>
               {mapClubTitle(club.name)}
             </a>
           </h5>
