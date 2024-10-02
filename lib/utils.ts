@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { SPORTS } from "./models";
+import { SERVICES, SPORTS } from "./models";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -29,3 +29,18 @@ export const mapSport = (sport: SPORTS) => {
       return "Tenis";
   }
 };
+
+export const mapService = (service: SERVICES) => {
+  switch (service) {
+    case SERVICES.buffet:
+      return "Buffet";
+    case SERVICES.showers:
+      return "Vestuario";
+    case SERVICES.parking:
+      return "Estacionamiento";
+    case SERVICES.grills:
+      return "Parrillas";
+    case SERVICES.security:
+      return "Seguridad";
+  }
+}
