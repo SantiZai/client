@@ -1,13 +1,15 @@
-import { Club } from "@/lib/models";
+import { Club, SPORTS } from "@/lib/models";
 import ClubSkeleton from "../pures/ClubSkeleton";
 import ClubCard from "../pures/ClubCard";
 
 const FilteredClubs = ({
   searchedClubs,
   isLoading,
+  sport,
 }: {
   searchedClubs: Club[];
   isLoading: boolean;
+  sport: SPORTS;
 }) => {
   return (
     <section className="w-11/12 mx-auto mt-8">
@@ -22,7 +24,13 @@ const FilteredClubs = ({
           </>
         ) : (
           searchedClubs.length > 0 &&
-          searchedClubs.map((club: Club) => <ClubCard club={club} />)
+          searchedClubs.map((club: Club) => (
+            <ClubCard
+              key={club.id}
+              club={club}
+              sport={sport}
+            />
+          ))
         )}
       </ul>
     </section>
