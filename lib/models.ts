@@ -18,12 +18,12 @@ enum SURFACES {
   hard,
 }
 
-enum SERVICES {
-  buffet,
-  showers,
-  parking,
-  grills,
-  security,
+export enum SERVICES {
+  buffet = "buffer",
+  showers = "showers",
+  parking = "parking",
+  grills = "grills",
+  security = "security",
 }
 
 interface Club {
