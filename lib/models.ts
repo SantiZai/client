@@ -5,11 +5,11 @@ enum USER_TYPES {
 }
 
 export enum SPORTS {
-  tennis,
-  soccer,
-  basketball,
-  volley,
-  rugby,
+  tennis = "tennis",
+  soccer = "soccer",
+  basketball = "basketball",
+  volley = "volley",
+  rugby = "rugby",
 }
 
 enum SURFACES {
