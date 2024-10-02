@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getClubById, getCourtsByClubId } from "@/lib/data";
-import { Club, Court } from "@/lib/models";
+import { Club, Court, SPORTS } from "@/lib/models";
 import { mapClubLocation, mapClubTitle } from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faLocationDot } from "@fortawesome/free-solid-svg-icons";
@@ -39,16 +39,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const ClubPage = ({ params }: { params: { id: string } }) => {
   const [club, setClub] = useState<Club>();
-  const [selectedHour, setSelectedHour] = useState<string>();
+  const [selectedHour, setSelectedHour] = useState<string>("00:00");
   const [availableCourts, setAvailableCourts] = useState<Court[]>();
+  const [sport, setSport] = useState<SPORTS>();
   const [date, setDate] = useState<Date>();
   const [formattedDate, setFormattedDate] = useState<string>("");
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
     getClubById(params.id).then((res) => setClub(res));
+    setSport(searchParams.get("sport") as SPORTS);
   }, [params.id]);
 
   useEffect(() => {
@@ -106,7 +111,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
       {club && (
         <section className="sm:mt-4">
           {/* mobile version */}
-          <div className="w-full block sm:hidden relative">
+          <div className="w-full block md:hidden relative">
             <Image
               src={club.image}
               alt={`${club.name} banner picture`}
@@ -152,7 +157,9 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                       onSelect={setDate}
                       disabled={(date) => {
                         const today = new Date();
-                        return date < today || date.getDate() > today.getDate() + 7;
+                        return (
+                          date < today || date.getDate() > today.getDate() + 7
+                        );
                       }}
                       initialFocus
                     />
@@ -163,6 +170,7 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               <InfiniteHorizontalScroll
                 hours={generateAvailableHoursPerClub(club, formattedDate)}
                 setSelectedHour={setSelectedHour}
+                selectedHour={selectedHour}
                 blocked={formattedDate.length < 1}
               />
 
@@ -202,7 +210,6 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                                   <AccordionContent className="flex justify-between">
                                     <span>90 minutos</span>
                                     <span>
-                                      {/* TODO: send the day of the reservation */}
                                       <Link
                                         href={`/create-reservation/${club.id}?courtId=${court.id}&day=${formattedDate}&hour=${selectedHour}&duration=large`}
                                       >
@@ -227,15 +234,118 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
           </div>
 
           {/* desktop version */}
-          <div className="hidden sm:block w-11/12 mx-auto">
-            <Image
-              src={club.image}
-              alt={`${club.name} banner picture`}
-              height={200}
-              width={500}
-              priority
-              className="w-full h-auto aspect-auto"
-            />
+          <div className="hidden md:flex flex-col lg:flex-row w-11/12 mx-auto">
+            <div className="w-full lg:w-1/2 flex flex-col gap-4">
+              <Image
+                src={club.image}
+                alt={`${club.name} banner picture`}
+                height={200}
+                width={500}
+                priority
+                className="w-full h-auto aspect-auto"
+              />
+            </div>
+
+            <div className="w-full lg:w-1/2">
+              <div className="w-full lg:w-11/12 mx-auto mb-4">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className="w-full pl-3 text-left font-normal"
+                    >
+                      {date ? (
+                        format(date, "PPP")
+                      ) : (
+                        <span>Seleccione una fecha</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto p-0"
+                    align="center"
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      disabled={(date) => {
+                        const today = new Date();
+                        return (
+                          date < today || date.getDate() > today.getDate() + 7
+                        );
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <InfiniteHorizontalScroll
+                hours={generateAvailableHoursPerClub(club, formattedDate)}
+                setSelectedHour={setSelectedHour}
+                selectedHour={selectedHour}
+                blocked={formattedDate.length < 1}
+              />
+
+              <div className="w-full lg:w-11/12 mx-auto">
+                {!selectedHour ? (
+                  <span>Seleccione un horario</span>
+                ) : availableCourts ? (
+                  <ul className="mt-4">
+                    {availableCourts.map((court: Court) => (
+                      <>
+                        <li
+                          key={court.id}
+                          className="mt-2 py-2"
+                        >
+                          <span>{court.name}</span>
+                          <div className="flex justify-between font-lg mt-2">
+                            <span>60 minutos</span>
+                            <span>
+                              <Link
+                                href={`/create-reservation/${club.id}?courtId=${court.id}&day=${formattedDate}&hour=${selectedHour}&duration=short`}
+                              >
+                                <FontAwesomeIcon icon={faArrowRight} />
+                              </Link>
+                            </span>
+                          </div>
+                          {/* TODO: mostrar para sacar turnos largos dependiendo de los turnos siguientes */}
+                          {selectedHour &&
+                            largeTurnIsPossible(court, selectedHour) && (
+                              <Accordion
+                                type="single"
+                                collapsible
+                              >
+                                <AccordionItem value="duration">
+                                  <AccordionTrigger className="text-sm">
+                                    Otras duraciones
+                                  </AccordionTrigger>
+                                  <AccordionContent className="flex justify-between">
+                                    <span>90 minutos</span>
+                                    <span>
+                                      <Link
+                                        href={`/create-reservation/${club.id}?courtId=${court.id}&day=${formattedDate}&hour=${selectedHour}&duration=large`}
+                                      >
+                                        <FontAwesomeIcon icon={faArrowRight} />
+                                      </Link>
+                                    </span>
+                                  </AccordionContent>
+                                </AccordionItem>
+                              </Accordion>
+                            )}
+                        </li>
+                        {availableCourts.indexOf(court) !==
+                          availableCourts.length - 1 && <Separator />}
+                      </>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>No hay canchas</span>
+                )}
+              </div>
+            </div>
           </div>
         </section>
       )}
