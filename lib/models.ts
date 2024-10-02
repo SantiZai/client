@@ -33,6 +33,7 @@ interface Club {
   image: string;
   location: string;
   address: string;
+  coords: string;
   courts: Court[];
   admin: User;
   adminId: string;
