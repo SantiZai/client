@@ -16,6 +16,7 @@ import {
   mapClubTitle,
   mapService,
   mapSport,
+  transformCoords,
 } from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -137,10 +138,18 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
               <div className="w-11/12 mx-auto mt-4 flex justify-between items-center">
                 <h3 className="text-xl">{mapClubTitle(club.name)}</h3>
                 <div className="w-12 h-12 border-2 border-orange-300 active:bg-orange-300 text-orange-300 active:text-black transition-all rounded-full p-4 flex justify-center items-center">
-                  <FontAwesomeIcon
-                    icon={faLocationDot}
-                    className="text-2xl"
-                  />
+                  <a
+                    href={`https://www.google.com.ar/maps/place/${transformCoords(
+                      club.coords
+                    )}/@${
+                      club.coords
+                    },17z/data=!3m1!4b1!4m4!3m3!8m2!3d-34.2785692!4d-60.2487025?entry=ttu&g_ep=EgoyMDI0MDkzMC4wIKXMDSoASAFQAw%3D%3D`}
+                  >
+                    <FontAwesomeIcon
+                      icon={faLocationDot}
+                      className="text-2xl"
+                    />
+                  </a>
                 </div>
               </div>
               <Separator className="w-11/12 mx-auto my-4" />
@@ -209,7 +218,6 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                               </Link>
                             </span>
                           </div>
-                          {/* TODO: mostrar para sacar turnos largos dependiendo de los turnos siguientes */}
                           {selectedHour &&
                             largeTurnIsPossible(court, selectedHour) && (
                               <Accordion
@@ -342,7 +350,6 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                                 </Link>
                               </span>
                             </div>
-                            {/* TODO: mostrar para sacar turnos largos dependiendo de los turnos siguientes */}
                             {selectedHour &&
                               largeTurnIsPossible(court, selectedHour) && (
                                 <Accordion
@@ -411,7 +418,10 @@ const ClubPage = ({ params }: { params: { id: string } }) => {
                 </div>
               </div>
               <Map
-                position={[Number(club.coords.split(",")[0]), Number(club.coords.split(",")[1])]}
+                position={[
+                  Number(club.coords.split(",")[0]),
+                  Number(club.coords.split(",")[1]),
+                ]}
                 popupText={mapClubTitle(club.name)}
               />
             </div>

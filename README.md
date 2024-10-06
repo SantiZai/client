@@ -1,4 +1,4 @@
 - [ ] Manage the language with the languaje preferences of the user
-- [ ] Logout
+- [x] Logout
 - [ ] create club if the service is hire
-- [ ] the users can be create reservations
+- [x] the users can be create reservations

@@ -1,24 +1,9 @@
-"use client";
-
-import { useEffect } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-import FOG from "vanta/src/vanta.fog";
 import Link from "next/link";
 
 const SearchClubSection = () => {
-  useEffect(() => {
-    /* FOG({
-      el: "#search",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.0,
-      minWidth: 200.0,
-    }); */
-  }, []);
-
   return (
     <section
       id="search"
@@ -41,10 +26,10 @@ const SearchClubSection = () => {
           </h5>
           <fieldset className="flex flex-col gap-4">
             <fieldset className="flex gap-4">
-              <Input
+              {/* <Input
                 type="text"
                 placeholder="Ingresa una ubicación"
-              />
+              /> */}
               <Input
                 type="text"
                 placeholder="Ingresa un deporte"

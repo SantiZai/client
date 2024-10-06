@@ -24,6 +24,8 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { Separator } from "../ui/separator";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -94,7 +96,7 @@ const Navigation = () => {
         <div className="w-1/2 sm:hidden flex justify-end">
           <Sheet>
             <SheetTrigger asChild>
-              <Button>{">"}</Button>
+              <Button variant="link" className="text-lg"><FontAwesomeIcon icon={faBars} /></Button>
             </SheetTrigger>
             <SheetContent className="z-[999] flex flex-col justify-between">
               <SheetHeader className="py-8">
@@ -121,7 +123,6 @@ const Navigation = () => {
                 <SheetDescription className="w-11/12 mx-auto">
                   {user ? (
                     <>
-                    {/* TODO: add more styles and finish the mobile nav */}
                     <Separator className="w-full mx-auto my-4" />
                     <div className="flex flex-col items-start mt-4">
                       <Link

@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { SPORTS } from "@/lib/models";
-import { Dispatch, SetStateAction } from "react";
+import { SPORTS } from '@/lib/models';
+import { Dispatch, SetStateAction } from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "../ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { Calendar as CalendarIcon, Search } from "lucide-react";
-import { format } from "date-fns";
-import { Calendar } from "../ui/calendar";
+} from '@/components/ui/select';
+import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
+import { Calendar as CalendarIcon, Search } from 'lucide-react';
+import { format } from 'date-fns';
+import { Calendar } from '../ui/calendar';
 
 const FilterClubs = ({
   setLocation,
@@ -63,14 +63,14 @@ const FilterClubs = ({
               className="w-1/2"
             >
               <Button
-                variant={"outline"}
+                variant={'outline'}
                 className={cn(
-                  "w-[280px] justify-start text-left font-normal",
-                  !date && "text-muted-foreground w-1/2"
+                  'w-[280px] justify-start text-left font-normal',
+                  !date && 'text-muted-foreground w-1/2'
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Fecha</span>}
+                {date ? format(date, 'PPP') : <span>Fecha</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
@@ -82,11 +82,6 @@ const FilterClubs = ({
               />
             </PopoverContent>
           </Popover>
-          {/* TODO: add for the hour */}
-          <Input
-            placeholder="TODO"
-            className="w-1/2"
-          />
         </div>
       </div>
     </section>
