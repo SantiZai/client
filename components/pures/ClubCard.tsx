@@ -42,18 +42,6 @@ const ClubCard = ({ club, sport }: { club: Club, sport: SPORTS }) => {
           <span>$1000</span>
         </div>
       </div>
-      {/* TODO: agregar la funcionalidad para traer los horarios disponibles en cada club */}
-      <div className="flex gap-2 mt-4">
-        <span className="px-4 py-2 border border-slate-200 rounded-md hover:cursor-pointer hover:bg-slate-200 transition-all">
-          19:00
-        </span>
-        <span className="px-4 py-2 border border-slate-200 rounded-md hover:cursor-pointer hover:bg-slate-200 transition-all">
-          19:30
-        </span>
-        <span className="px-4 py-2 border border-slate-200 rounded-md hover:cursor-pointer hover:bg-slate-200 transition-all">
-          20:00
-        </span>
-      </div>
     </li>
   );
 };
