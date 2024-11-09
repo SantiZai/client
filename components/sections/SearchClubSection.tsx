@@ -1,9 +1,41 @@
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+'use client';
 
-import Link from "next/link";
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+
+const ubicaciones = ['Salto, Buenos Aires, Argentina'];
 
 const SearchClubSection = () => {
+  const [location, setLocation] = useState<string>('');
+  const [showResults, setShowResults] = useState<boolean>(false);
+  const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
+
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setShowResults(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const filtered = ubicaciones.filter((ubicacion) => {
+      return ubicacion.toLowerCase().includes(location.toLowerCase());
+    });
+    setFilteredLocations(filtered);
+  }, [location]);
+
   return (
     <section
       id="search"
@@ -26,13 +58,47 @@ const SearchClubSection = () => {
           </h5>
           <fieldset className="flex flex-col gap-4">
             <fieldset className="flex gap-4">
-              {/* <Input
-                type="text"
-                placeholder="Ingresa una ubicación"
-              /> */}
+              <div
+                ref={searchRef}
+                className="w-1/2"
+              >
+                <Input
+                  type="text"
+                  placeholder="Ingresa una ubicación"
+                  value={location}
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                    setShowResults(true);
+                  }}
+                  onFocus={() => setShowResults(true)}
+                />
+                <div className="relative">
+                  {showResults && location && (
+                    <div className="absolute z-10 w-full bg-gray-500 rounded-md px-3 py-1 text-sm">
+                      {filteredLocations.map((ubicacion, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            setLocation(ubicacion);
+                            setShowResults(false);
+                          }}
+                        >
+                          <span className="font-semibold">{ubicacion}</span>
+                        </div>
+                      ))}
+                      {filteredLocations.length === 0 && (
+                        <div className="text-center text-pretty">
+                          No hay ubicaciones
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
               <Input
                 type="text"
                 placeholder="Ingresa un deporte"
+                className="w-1/2"
               />
             </fieldset>
             <fieldset className="flex gap-4">
