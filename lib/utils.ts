@@ -2,9 +2,17 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { SERVICES, SPORTS } from "./models";
 
+/*
+* SHADCN UTILS
+*/
+
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
+
+/*
+* MAP NAMES
+*/
 
 export const mapClubTitle = (title: string) =>
   title
@@ -44,6 +52,10 @@ export const mapService = (service: SERVICES) => {
       return "Seguridad";
   }
 };
+
+/*
+* TRANSFORM COORDS
+*/
 
 const transformCoord = (coord: string) => {
   const coordDegree = Math.abs(Number(coord.split(".")[0]));
