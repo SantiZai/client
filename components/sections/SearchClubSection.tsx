@@ -50,12 +50,12 @@ const SearchClubSection = () => {
           className="flex flex-col items-center gap-1"
         >
           <span className="mb-2 bg-gray-200 py-1 px-2 rounded-md text-sm">
-            Encuentra tu club
+            Encontrá tu club
           </span>
-          <h3 className="text-4xl">Buscar clubes disponibles</h3>
+          <h3 className="text-4xl">Busca tu próximo partido</h3>
           <h5 className="max-w-lg text-center text-pretty mb-4">
             Filtra por ubicación, deporte, día y horario para encontrar el club
-            perfecto para tus necesidades.
+            perfecto para tu partido.
           </h5>
           <fieldset className="flex flex-col gap-4">
             <fieldset className="flex gap-4">
@@ -102,6 +102,7 @@ const SearchClubSection = () => {
                 className="w-1/2"
               />
             </fieldset>
+            {/* TODO: inputs acordes a los filtros */}
             <fieldset className="flex gap-4">
               <Input
                 type="text"
