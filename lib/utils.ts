@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { SERVICES, SPORTS } from './models';
+import { parse } from 'date-fns';
 
 /*
  * SHADCN UTILS
@@ -9,6 +10,11 @@ import { SERVICES, SPORTS } from './models';
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
+
+/*
+ * PARSE DATES
+ */
+export const parseDate = (date: string) => parse(date, "dd-MM-yyyy", new Date())
 
 /*
  * MAP NAMES
