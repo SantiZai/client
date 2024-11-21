@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { mapQueryClubLocation } from '@/lib/utils';
 
 const ubicaciones = ['Salto, Buenos Aires, Argentina'];
 
@@ -113,7 +114,7 @@ const SearchClubSection = () => {
             </fieldset>
           </fieldset>
           <Button className="w-1/4 mt-4">
-            <Link href="/clubs/salto,buenos+aires,argentina">Buscar</Link>
+            <Link href={`/clubs/${mapQueryClubLocation(location)}`}>Buscar</Link>
           </Button>
         </form>
       </div>
