@@ -19,7 +19,7 @@ const HireTheServiceSection = () => {
       </div>
       <div className="w-full sm:w-1/3 flex flex-col items-center gap-2">
         <Button className="w-full sm:w-1/2">Características</Button>
-        <Button className="w-full sm:w-1/2">Servicios y planes</Button>
+        <Button variant={"secondary"} className="w-full sm:w-1/2">Servicios y planes</Button>
       </div>
     </section>
   );
