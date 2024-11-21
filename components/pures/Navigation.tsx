@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Button } from "../ui/button";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import Image from "next/image";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
+import { Button } from '../ui/button';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { createUser, getUserByEmail } from "@/lib/data";
-import { useUserStore } from "@/stores/user/user-store-provider";
+} from '../ui/dropdown-menu';
+import { createUser, getUserByEmail } from '@/lib/data';
+import { useUserStore } from '@/stores/user/user-store-provider';
 import {
   Sheet,
   SheetContent,
@@ -22,10 +22,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
-import { Separator } from "../ui/separator";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+} from '../ui/sheet';
+import { Separator } from '../ui/separator';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -34,6 +34,7 @@ const Navigation = () => {
   const { user, error, isLoading } = useUser();
 
   const setUserStore = useUserStore((state) => state.setUser);
+  const userId = useUserStore((state) => state.id);
 
   /**
    * Verify if the user exists
@@ -48,7 +49,6 @@ const Navigation = () => {
             email: user.email as string,
             fullname: user.name as string,
           }).then((newUser) => {
-            console.log(newUser);
             setUserStore({
               id: newUser.id,
               fullname: newUser.fullname,
@@ -79,16 +79,16 @@ const Navigation = () => {
       setIsVisible(shouldShowNavbar);
       setPrevScroll(scrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [prevScroll]);
 
   return (
     <header
       className={`h-20 w-full fixed z-[999] top-0 left-0 right-0 transition-all duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
+        isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <nav className="h-full w-11/12 mx-auto flex justify-between items-center">
@@ -96,7 +96,12 @@ const Navigation = () => {
         <div className="w-1/2 sm:hidden flex justify-end">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="link" className="text-lg"><FontAwesomeIcon icon={faBars} /></Button>
+              <Button
+                variant="link"
+                className="text-lg"
+              >
+                <FontAwesomeIcon icon={faBars} />
+              </Button>
             </SheetTrigger>
             <SheetContent className="z-[999] flex flex-col justify-between">
               <SheetHeader className="py-8">
@@ -123,43 +128,48 @@ const Navigation = () => {
                 <SheetDescription className="w-11/12 mx-auto">
                   {user ? (
                     <>
-                    <Separator className="w-full mx-auto my-4" />
-                    <div className="flex flex-col items-start mt-4">
-                      <Link
-                        href={""}
-                        className="text-lg text-black"
-                      >
-                        Inicio
-                      </Link>
-                      <Link
-                        href={""}
-                        className="text-lg text-black"
-                      >
-                        Mi perfil
-                      </Link>
-                      <Link
-                        href={""}
-                        className="text-lg text-black"
-                      >
-                        Mis reservas
-                      </Link>
-                    </div>
+                      <Separator className="w-full mx-auto my-4" />
+                      <div className="flex flex-col items-start mt-4">
+                        <Link
+                          href={''}
+                          className="text-lg text-black"
+                        >
+                          Inicio
+                        </Link>
+                        <Link
+                          href={''}
+                          className="text-lg text-black"
+                        >
+                          Mi perfil
+                        </Link>
+                        <Link
+                          href={`/reservations/${userId}`}
+                          className="text-lg text-black"
+                        >
+                          Mis reservas
+                        </Link>
+                      </div>
                       <Separator className="w-full mx-auto my-4" />
                       <Button className="w-full">
                         <Link
-                          href={"/api/auth/logout"}
+                          href={'/api/auth/logout'}
                           className="text-lg"
                         >
                           Cerrar sesión
                         </Link>
                       </Button>
                       <Separator className="w-full mx-auto my-4" />
-                      <Link href="/privacy-policy" className="text-slate-500 text-center text-sm">Términos y condiciones</Link>
+                      <Link
+                        href="/privacy-policy"
+                        className="text-slate-500 text-center text-sm"
+                      >
+                        Términos y condiciones
+                      </Link>
                     </>
                   ) : (
                     <Button className="w-full">
                       <Link
-                        href={"/api/auth/login"}
+                        href={'/api/auth/login'}
                         className="text-lg"
                       >
                         Iniciar sesión
@@ -177,7 +187,7 @@ const Navigation = () => {
         <div className="w-1/2 hidden sm:flex justify-end items-center gap-2">
           <Button
             className="sm:w-1/2 lg:w-1/3 xl:w-1/4"
-            variant={"secondary"}
+            variant={'secondary'}
           >
             Lo quiero en mi club
           </Button>
@@ -223,7 +233,12 @@ const Navigation = () => {
                 </div>
                 <DropdownMenuSeparator />
                 <div className="flex flex-col gap-2 my-4">
-                  <span className="text-sm">Mis reservas</span>
+                  <Link
+                    href={`/reservations/${userId}`}
+                    className="text-sm font-semibold"
+                  >
+                    Mis reservas
+                  </Link>
                   <span className="text-sm">Mis partidos</span>
                   <span className="text-sm">Mi perfil</span>
                   <Link
@@ -234,9 +249,12 @@ const Navigation = () => {
                   </Link>
                 </div>
                 <DropdownMenuSeparator />
-                <span className="text-xs text-center hover:underline">
+                <Link
+                  href={`/reservations/${userId}`}
+                  className="text-xs hover:underline"
+                >
                   Términos y condiciones
-                </span>
+                </Link>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
