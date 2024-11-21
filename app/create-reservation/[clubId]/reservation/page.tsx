@@ -10,7 +10,7 @@ import { es } from 'date-fns/locale';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-const ReservationCreatedPage = ({ params }: { params: { clubId: string } }) => {
+const ReservationCreatedPage = () => {
   const searchParams = useSearchParams();
 
   const date = parse(
@@ -27,7 +27,7 @@ const ReservationCreatedPage = ({ params }: { params: { clubId: string } }) => {
         </div>
         <h3 className="text-2xl font-bold text-center">¡Reserva exitosa!</h3>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 font-bold">
+          <div className="flex gap-2 items-center font-bold">
             <Calendar
               size={20}
               color="gray"
@@ -35,11 +35,11 @@ const ReservationCreatedPage = ({ params }: { params: { clubId: string } }) => {
             <span>
               Día:{' '}
               <span className="font-normal">
-                {format(date, "d 'de' MMMM 'del' yyyy", { locale: es })}
+                {format(date, "d 'de' MMMM 'de' yyyy", { locale: es })}
               </span>
             </span>
           </div>
-          <div className="flex gap-2 font-bold">
+          <div className="flex gap-2 items-center font-bold">
             <Clock
               size={20}
               color="gray"
@@ -51,7 +51,7 @@ const ReservationCreatedPage = ({ params }: { params: { clubId: string } }) => {
               </span>
             </span>
           </div>
-          <div className="flex gap-2 font-bold">
+          <div className="flex gap-2 items-center font-bold">
             <MapPin
               size={20}
               color="gray"
