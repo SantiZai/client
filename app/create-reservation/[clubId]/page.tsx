@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Breadcrumb,
@@ -7,27 +7,27 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
-import { createReservation, getClubById, getCourtById } from "@/lib/data";
-import { Club, Court } from "@/lib/models";
-import { mapClubLocation, mapClubTitle, mapSport } from "@/lib/utils";
-import { UserState } from "@/stores/user/user-store";
-import { useUserStore } from "@/stores/user/user-store-provider";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import { createReservation, getClubById, getCourtById } from '@/lib/data';
+import { Club, Court } from '@/lib/models';
+import { mapClubLocation, mapClubTitle, mapSport } from '@/lib/utils';
+import { UserState } from '@/stores/user/user-store';
+import { useUserStore } from '@/stores/user/user-store-provider';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
-  const [date, setDate] = useState<string>("");
-  const [hour, setHour] = useState<string>("");
+  const [date, setDate] = useState<string>('');
+  const [hour, setHour] = useState<string>('');
   const [isLarge, setIsLarge] = useState<boolean>();
-  const [clubId, setClubId] = useState<string>("");
-  const [courtId, setCourtId] = useState<string>("");
+  const [clubId, setClubId] = useState<string>('');
+  const [courtId, setCourtId] = useState<string>('');
   const [userStore, setUserStore] = useState<UserState>();
 
   const [club, setClub] = useState<Club>();
@@ -40,14 +40,15 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
   );
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
-    setHour(searchParams.get("hour") as string);
-    setDate(searchParams.get("day") as string);
-    searchParams.get("duration") == "short"
+    setHour(searchParams.get('hour') as string);
+    setDate(searchParams.get('day') as string);
+    searchParams.get('duration') == 'short'
       ? setIsLarge(false)
       : setIsLarge(true);
-    setCourtId(searchParams.get("courtId") as string);
+    setCourtId(searchParams.get('courtId') as string);
     setClubId(params.clubId);
   }, [date, hour, isLarge, courtId, params.clubId]);
 
@@ -126,8 +127,8 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                       height="60"
                       src="/placeholder.svg"
                       style={{
-                        aspectRatio: "60/60",
-                        objectFit: "cover",
+                        aspectRatio: '60/60',
+                        objectFit: 'cover',
                       }}
                       width="60"
                     />
@@ -171,8 +172,8 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                       {court.name} - {mapSport(court.sport)}
                     </p>
                     <p className="text-sm">
-                      {court.surface},{" "}
-                      {court.lightning ? "Con iluminación" : "Sin iluminación"},
+                      {court.surface},{' '}
+                      {court.lightning ? 'Con iluminación' : 'Sin iluminación'},
                       Descubierta
                     </p>
                   </div>
@@ -202,7 +203,7 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                       <Input
                         className="w-full"
                         disabled
-                        placeholder={phonenumber ? phonenumber : "-"}
+                        placeholder={phonenumber ? phonenumber : '-'}
                       />
                     </div>
                     <div className="flex items-center">
@@ -230,15 +231,19 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                     </p>
                     <Button
                       className="w-full"
-                      onClick={() =>
+                      onClick={() => {
                         createReservation({
                           date,
                           hour,
                           isLarge,
                           userId: id,
                           courtId,
-                        })
-                      }
+                        }).finally(() =>
+                          router.push(
+                            `/create-reservation/${clubId}/reservation?club=${club.name}&court=${court.name}&day=${date}&hour=${hour}&isLarge=${isLarge}`
+                          )
+                        );
+                      }}
                     >
                       Confirmar reserva
                     </Button>
@@ -479,7 +484,7 @@ function StarIcon({ className, fill }: { className?: string; fill?: string }) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill={fill ? fill : "none"}
+      fill={fill ? fill : 'none'}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
