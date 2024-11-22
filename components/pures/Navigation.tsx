@@ -26,6 +26,7 @@ import {
 import { Separator } from '../ui/separator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { capitalize } from '@/lib/utils';
 
 const Navigation = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -120,7 +121,7 @@ const Navigation = () => {
                           height={60}
                           className="rounded-full"
                         />
-                        <span className="text-xl">{user.name}</span>
+                        <span className="text-xl">{capitalize(user.name as string)}</span>
                       </div>
                     )
                   )}
@@ -131,20 +132,20 @@ const Navigation = () => {
                       <Separator className="w-full mx-auto my-4" />
                       <div className="flex flex-col items-start mt-4">
                         <Link
-                          href={''}
-                          className="text-lg text-black"
+                          href={'/'}
+                          className="text-lg font-semibold text-black"
                         >
                           Inicio
                         </Link>
                         <Link
                           href={''}
-                          className="text-lg text-black"
+                          className="text-lg font-semibold text-black"
                         >
                           Mi perfil
                         </Link>
                         <Link
                           href={`/reservations/${userId}`}
-                          className="text-lg text-black"
+                          className="text-lg font-semibold text-black"
                         >
                           Mis reservas
                         </Link>
@@ -153,7 +154,7 @@ const Navigation = () => {
                       <Button className="w-full">
                         <Link
                           href={'/api/auth/logout'}
-                          className="text-lg"
+                          className="text-lg font-semibold"
                         >
                           Cerrar sesión
                         </Link>
@@ -207,7 +208,7 @@ const Navigation = () => {
                     height={40}
                     className="rounded-full"
                   />
-                  <span>{user.name}</span>
+                  <span className='font-semibold'>{capitalize(user.name as string)}</span>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="z-[1000] p-4">
@@ -243,7 +244,7 @@ const Navigation = () => {
                   <span className="text-sm">Mi perfil</span>
                   <Link
                     href="/api/auth/logout"
-                    className="text-sm"
+                    className="text-sm font-semibold"
                   >
                     Cerrar sesión
                   </Link>
