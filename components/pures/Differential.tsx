@@ -32,7 +32,7 @@ const Differential = () => {
     <section className="h-32 w-full bg-gray-200 flex justify-center items-center text-center">
       <h3 className="text-2xl">
         {text}
-        {boldText && <strong>{boldText}</strong>}
+        {boldText && <span className="text-[#003049] font-bold">{boldText}</span>}
       </h3>
     </section>
   );
