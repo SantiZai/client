@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 const ReservationsPage = ({ params }: { params: { userId: string } }) => {
   const [user, setUser] = useState<User>({} as User);
-  const [reservations, setReservations] = useState<Reservation[]>();
+  const [reservations, setReservations] = useState<Reservation[]>([]);
 
   const [ascendentOrder, setAscendentOrder] = useState<boolean>(true);
 
@@ -18,20 +18,21 @@ const ReservationsPage = ({ params }: { params: { userId: string } }) => {
     if (!reservations) return;
     const sortedReservations = [...reservations].toSorted((a, b) => {
       const dateComparison =
-        new Date(parseDate(a.date)).getTime() - new Date(parseDate(b.date)).getTime();
+        new Date(parseDate(a.date)).getTime() -
+        new Date(parseDate(b.date)).getTime();
 
-        if (dateComparison === 0) {
-            const [aHour, aMinute] = a.hour.split(':').map(Number);
-            const [bHour, bMinute] = b.hour.split(':').map(Number);
-      
-            const hourComparison = aHour - bHour;
-            if (hourComparison === 0) {
-              // Si las horas son iguales, comparamos los minutos
-              return ascendentOrder ? aMinute - bMinute : bMinute - aMinute;
-            }
-            // Comparación directa de horas
-            return ascendentOrder ? hourComparison : -hourComparison;
-          }
+      if (dateComparison === 0) {
+        const [aHour, aMinute] = a.hour.split(':').map(Number);
+        const [bHour, bMinute] = b.hour.split(':').map(Number);
+
+        const hourComparison = aHour - bHour;
+        if (hourComparison === 0) {
+          // Si las horas son iguales, comparamos los minutos
+          return ascendentOrder ? aMinute - bMinute : bMinute - aMinute;
+        }
+        // Comparación directa de horas
+        return ascendentOrder ? hourComparison : -hourComparison;
+      }
       return ascendentOrder ? dateComparison : -dateComparison;
     });
     setReservations(sortedReservations);
@@ -46,35 +47,42 @@ const ReservationsPage = ({ params }: { params: { userId: string } }) => {
   }, [params.userId]);
 
   useEffect(() => {
-    setReservations(user.reservations);
+    setReservations(user.reservations || []);
   }, [user]);
 
   return (
     <main className="w-11/12 mx-auto min-h-screen py-20">
       <div className="w-full flex justify-between">
         <h1 className="text-3xl mb-4">Mis reservas</h1>
-        <Button
-          variant={'carousel'}
-          onClick={() => setAscendentOrder(!ascendentOrder)}
-        >
-          Fecha{' '}
-          <ArrowDown
-            size={20}
-            className={`${!ascendentOrder && 'rotate-180'} transition-all`}
-          />
-        </Button>
+        {reservations.length > 0 && (
+          <Button
+            variant={'carousel'}
+            onClick={() => setAscendentOrder(!ascendentOrder)}
+          >
+            Fecha{' '}
+            <ArrowDown
+              size={20}
+              className={`${!ascendentOrder && 'rotate-180'} transition-all`}
+            />
+          </Button>
+        )}
       </div>
       <section className="flex flex-col gap-2">
-        {user &&
-          reservations &&
+        {user && reservations.length > 0 ? (
           reservations.map((reservation: Reservation) => {
             return (
               <ReservationCard
                 key={reservation.id}
                 reservation={reservation}
+                setReservations={setReservations}
               />
             );
-          })}
+          })
+        ) : (
+          <h3 className="font-semibold text-3xl text-center mt-8">
+            ¡Es un buen momento para armar un partidito!
+          </h3>
+        )}
       </section>
     </main>
   );
