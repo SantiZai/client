@@ -12,9 +12,27 @@ export const cn = (...inputs: ClassValue[]) => {
 };
 
 /*
- * PARSE DATES
+ * DATES AND HOURS
  */
-export const parseDate = (date: string) => parse(date, "dd-MM-yyyy", new Date())
+export const parseDate = (date: string) =>
+  parse(date, 'dd-MM-yyyy', new Date());
+
+export const getHourFinish = (hour: string, isLarge: boolean) => {
+  const [prevHour, prevMinutes] = hour.split(':');
+  const hourNumber = Number(prevHour);
+  const minutesNumber = Number(prevMinutes);
+  if (!isLarge) {
+    if (hourNumber < 9) return `0${hourNumber + 1}:${prevMinutes}`;
+    if (hourNumber < 24) return `${hourNumber + 1}:${prevMinutes}`;
+    else return `00:${prevMinutes}`;
+  } else {
+    if (hourNumber < 9 && minutesNumber < 30) return `0${hourNumber + 1}:30`;
+    if (hourNumber < 24 && minutesNumber < 30) return `${hourNumber + 1}:30`;
+    if (hourNumber < 8 && minutesNumber > 0) return `0${hourNumber + 2}:00`;
+    if (hourNumber < 24 && minutesNumber > 0) return `${hourNumber + 2}:00`;
+    else return `00:30`;
+  }
+};
 
 /*
  * MAP NAMES
