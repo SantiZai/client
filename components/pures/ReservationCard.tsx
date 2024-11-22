@@ -9,7 +9,13 @@ import { Clock, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 
-const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
+const ReservationCard = ({
+  reservation,
+  setReservations,
+}: {
+  reservation: Reservation;
+  setReservations: React.Dispatch<React.SetStateAction<Reservation[]>>;
+}) => {
   const [club, setClub] = useState<Club>();
   const [court, setCourt] = useState<Court>();
 
@@ -50,7 +56,15 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
             <Button variant={'outline'}>Detalles</Button>
             <Button
               variant={'destructive'}
-              onClick={() => deleteReservation(reservation.id)}
+              onClick={() => {
+                deleteReservation(reservation.id).then(() => {
+                  setReservations((prevState: Reservation[]) =>
+                    prevState.filter(
+                      (r: Reservation) => r.id !== reservation.id
+                    )
+                  );
+                });
+              }}
             >
               Cancelar
             </Button>
