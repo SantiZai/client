@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { createReservation, getClubById, getCourtById } from '@/lib/data';
 import { Club, Court } from '@/lib/models';
-import { mapClubLocation, mapClubTitle, mapSport } from '@/lib/utils';
+import { getHourFinish, mapClubLocation, mapClubTitle, mapSport } from '@/lib/utils';
 import { UserState } from '@/stores/user/user-store';
 import { useUserStore } from '@/stores/user/user-store-provider';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -25,7 +25,7 @@ import { useEffect, useState } from 'react';
 const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
   const [date, setDate] = useState<string>('');
   const [hour, setHour] = useState<string>('');
-  const [isLarge, setIsLarge] = useState<boolean>();
+  const [isLarge, setIsLarge] = useState<boolean>(false);
   const [clubId, setClubId] = useState<string>('');
   const [courtId, setCourtId] = useState<string>('');
   const [userStore, setUserStore] = useState<UserState>();
@@ -117,7 +117,7 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                   <div className="flex items-center space-x-2 mb-4">
                     <CircleCheckIcon className="text-green-500" />
                     <h2 className="text-xl font-semibold">
-                      {court.sport} - {mapClubTitle(club.name)}
+                      {mapSport(court.sport)} - {mapClubTitle(club.name)}
                     </h2>
                   </div>
                   <div className="flex items-center mb-4">
@@ -163,7 +163,7 @@ const CreateReservationPage = ({ params }: { params: { clubId: string } }) => {
                     <div>
                       <ClockIcon className="mb-1" />
                       <p className="text-sm">Turno</p>
-                      <p className="font-bold text-sm">11:30 - 12:30</p>
+                      <p className="font-bold text-sm">{hour} - {getHourFinish(hour, isLarge)}</p>
                     </div>
                   </div>
                   <div className="mb-4">
