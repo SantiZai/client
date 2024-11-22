@@ -52,7 +52,7 @@ const SearchClubSection = () => {
           <span className="mb-2 bg-gray-200 py-1 px-2 rounded-md text-sm">
             Encontrá tu club
           </span>
-          <h3 className="text-4xl">Busca tu próximo partido</h3>
+          <h3 className="text-4xl">Buscá tu próximo partido</h3>
           <h5 className="max-w-lg text-center text-pretty mb-4">
             Filtra por ubicación, deporte, día y horario para encontrar el club
             perfecto para tu partido.
@@ -75,7 +75,7 @@ const SearchClubSection = () => {
                 />
                 <div className="relative">
                   {showResults && location && (
-                    <div className="absolute z-10 w-full bg-gray-500 rounded-md px-3 py-1 text-sm">
+                    <div className="absolute z-10 w-full bg-white rounded-md px-3 py-1 text-sm">
                       {filteredLocations.map((ubicacion, i) => (
                         <div
                           key={i}
