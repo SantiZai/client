@@ -22,7 +22,7 @@ const ReservationCreatedPage = () => {
   return (
     <main className="min-h-screen grid place-content-center">
       <section className="w-full max-w-md flex flex-col gap-4 shadow-md sm:p-14 sm:rounded-lg">
-        <div className="mx-auto bg-green-100 text-green-600 rounded-full p-3 w-16 h-16 flex items-center justify-center">
+        <div className="mx-auto bg-[#669BBC]/50 text-[#003049]/70 rounded-full p-3 w-16 h-16 flex items-center justify-center">
           <Check size={64} />
         </div>
         <h3 className="text-2xl font-bold text-center">¡Reserva exitosa!</h3>
