@@ -1,6 +1,6 @@
 'use client';
 
-import { getClubById, getCourtById } from '@/lib/data';
+import { deleteReservation, getClubById, getCourtById } from '@/lib/data';
 import { Club, Court, Reservation } from '@/lib/models';
 import { mapClubTitle, parseDate } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -48,7 +48,12 @@ const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
           </div>
           <div className="flex gap-2 items-center">
             <Button variant={'outline'}>Detalles</Button>
-            <Button variant={'destructive'}>Cancelar</Button>
+            <Button
+              variant={'destructive'}
+              onClick={() => deleteReservation(reservation.id)}
+            >
+              Cancelar
+            </Button>
           </div>
         </div>
       )}
