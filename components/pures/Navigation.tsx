@@ -88,12 +88,14 @@ const Navigation = () => {
 
   return (
     <header
-      className={`h-20 w-full fixed z-[999] top-0 left-0 right-0 transition-all duration-300 ${
+      className={`h-20 w-full fixed z-[999] top-0 left-0 right-0 transition-all duration-300 bg-white/50 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <nav className="h-full w-11/12 mx-auto flex justify-between items-center">
-        <div className="w-1/2">Logo</div>
+        <div className="w-1/2">
+          <Link href={'/'}>Logo</Link>
+        </div>
         <div className="w-1/2 sm:hidden flex justify-end">
           <Sheet>
             <SheetTrigger asChild>
@@ -121,7 +123,9 @@ const Navigation = () => {
                           height={60}
                           className="rounded-full"
                         />
-                        <span className="text-xl">{capitalize(user.name as string)}</span>
+                        <span className="text-xl">
+                          {capitalize(user.name as string)}
+                        </span>
                       </div>
                     )
                   )}
@@ -208,7 +212,9 @@ const Navigation = () => {
                     height={40}
                     className="rounded-full"
                   />
-                  <span className='font-semibold'>{capitalize(user.name as string)}</span>
+                  <span className="font-semibold">
+                    {capitalize(user.name as string)}
+                  </span>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="z-[1000] p-4">
@@ -221,7 +227,7 @@ const Navigation = () => {
                     className="rounded-full"
                   />
                   <DropdownMenuLabel className="text-lg">
-                    {user.name}
+                    {capitalize(user.name as string)}
                   </DropdownMenuLabel>
                 </div>
                 <DropdownMenuSeparator />
@@ -236,7 +242,7 @@ const Navigation = () => {
                 <div className="flex flex-col gap-2 my-4">
                   <Link
                     href={`/reservations/${userId}`}
-                    className="text-sm font-semibold"
+                    className="text-sm font-semibold hover:underline"
                   >
                     Mis reservas
                   </Link>
@@ -244,7 +250,7 @@ const Navigation = () => {
                   <span className="text-sm">Mi perfil</span>
                   <Link
                     href="/api/auth/logout"
-                    className="text-sm font-semibold"
+                    className="text-sm font-semibold text-[#C1121F] hover:underline"
                   >
                     Cerrar sesión
                   </Link>
